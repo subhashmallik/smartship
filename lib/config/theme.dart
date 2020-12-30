@@ -27,6 +27,8 @@ class AppColors {
   static const black = Color(0xFF222222);
   static const lightGray = Color(0xFF9B9B9B);
   static const darkGray = Color(0xFF979797);
+  static const appLightGrey = Color(0xFFBDC7D4);
+  static const appRecBundle = Color(0xFF4C6D9F);
   static const white = Color(0xFFFFFFFF);
   static const orange = Color(0xFFFFBA49);
   static const background = Color(0xFFE5E5E5);
@@ -68,6 +70,8 @@ class AppColors {
   static const Color appDarkBlue5 = Color(0xFF1B2F4B);
   static const Color dashBorder = Color(0xFF496A9D);
   static const Color couponHint = Color(0xFF5F8CC9);
+  static const Color appAddressSelectColor = Color(0xFF007884);
+  static const Color appEditColor = Color(0xFF1F406F);
 }
 
 class AppConsts {
