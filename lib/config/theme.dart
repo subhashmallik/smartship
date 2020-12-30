@@ -171,4 +171,36 @@ class AppTheme {
       ),
     );
   }
+
+  static Future<T> presentDialogWithChild<T>(BuildContext context, Widget child,
+      {EdgeInsets margin, Color barrierColor}) {
+    var _width = MediaQuery.of(context).size.width;
+    return showGeneralDialog<T>(
+        barrierColor: barrierColor ?? Colors.black38,
+        transitionBuilder: (context, a1, a2, widget) {
+          return Transform.translate(
+            child: Opacity(
+              opacity: a1.value,
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                child: Scaffold(
+                  backgroundColor: Colors.transparent,
+                  body: GestureDetector(
+                    onTap: () {},
+                    child: child,
+                  ),
+                ),
+              ),
+            ),
+            offset: Offset(0, _width - (a1.value * _width)),
+          );
+        },
+        transitionDuration: Duration(milliseconds: 150),
+        barrierDismissible: true,
+        barrierLabel: '',
+        context: context,
+        pageBuilder: (context, animation1, animation2) => null);
+  }
 }

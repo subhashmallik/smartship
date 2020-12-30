@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:smartshipapp/config/routes.dart';
 import 'package:smartshipapp/config/theme.dart';
 import 'package:smartshipapp/presentation/widgets/independent/custom_button.dart';
 import 'package:smartshipapp/presentation/widgets/independent/input_field.dart';
-import 'package:smartshipapp/presentation/widgets/independent/service_button.dart';
+import 'package:smartshipapp/presentation/widgets/independent/text_tile.dart';
 
 import 'forget_password.dart';
 
@@ -20,103 +20,133 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
   final TextEditingController emailController = TextEditingController();
   var _key = GlobalKey<ScaffoldState>();
   double sizeBetween;
-
+  final Tween<BorderRadius> _kFrontHeadingBevelRadius = new BorderRadiusTween(
+    begin: const BorderRadius.only(
+      topRight: Radius.circular(50.0),
+    ),
+  );
   @override
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
     sizeBetween = height / 20;
     return Scaffold(
-      key: _key,
-      appBar: AppBar(
-        backgroundColor: AppColors.transparent,
-        brightness: Brightness.light,
-        elevation: 0,
-        iconTheme: IconThemeData(color: AppColors.black),
-      ),
-      backgroundColor: AppColors.background,
-      body: BlocConsumer<ForgetPasswordBloc, ForgetPasswordState>(
-        listener: (context, state) {
-          // on success push back
-          if (state is ForgetPasswordFinishedState) {
-            Scaffold.of(context).showSnackBar(
-              SnackBar(
-                content: Text(
-                    'An email with password reminder was sent to ${state.email}'),
-                backgroundColor: Colors.green, // TODO use app colors
-                duration: Duration(seconds: 3),
-              ),
-            );
-          }
-          // on failure show a snackbar
-          if (state is ForgetPasswordErrorState) {
-            Scaffold.of(context).showSnackBar(
-              SnackBar(
-                content: Text('${state.error}'),
-                backgroundColor: Colors.red, // TODO use app colors
-                duration: Duration(seconds: 3),
-              ),
-            );
-          }
-        },
-        builder: (context, state) {
-          // show loading screen while processing
-          if (state is ForgetPasswordProcessingState) {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-          return SingleChildScrollView(
-            child: Container(
-              height: height * 0.9,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  SizedBox(
-                    height: sizeBetween,
-                  ),
-                  Padding(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
-                    child: Text(
-                        'Please enter your email address. You will receive a link to create a new password via email'),
-                  ),
-                  InputField(
-                    controller: emailController,
-                    hint: 'Email',
-                    //  validator: Validator.validateEmail,
-                  ),
-                  OpenFlutterButton(title: 'SEND', onPressed: _validateAndSend),
-                  SizedBox(
-                    height: sizeBetween * 2,
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(bottom: AppSizes.linePadding),
-                    child: Center(
-                      child: Text('Or sign up with social account'),
+      body: SingleChildScrollView(
+        child: Container(
+          child: Stack(
+            children: [
+              Container(
+                decoration: new BoxDecoration(
+                  image: new DecorationImage(
+                    alignment: Alignment.topLeft,
+                    image: new AssetImage(
+                      'assets/images/signin/Login_screen_image2.png',
                     ),
+                    // fit: BoxFit.cover,
                   ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: width * 0.2),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: <Widget>[
-                        OpenFlutterServiceButton(
-                          serviceType: ServiceType.Google,
-                          onPressed: () {},
+                ),
+                child: Image.asset(
+                  'assets/images/signin/Gradient2-2.png',
+                  fit: BoxFit.cover,
+                  width: MediaQuery.of(context).size.width,
+                ),
+              ),
+              Positioned(
+                top: 80,
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Stack(
+                        children: [
+                          Container(
+                            child: Image.asset(
+                                'assets/images/signin/Gradient2-1.png',
+                                fit: BoxFit.cover,
+                                width:
+                                    MediaQuery.of(context).size.width * 0.25),
+                          ),
+                          Container(
+                            child: SvgPicture.asset(
+                              'assets/images/logo.svg',
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Container(
+                transform: Matrix4.translationValues(0.0, 250.0, 0.0),
+                decoration: ShapeDecoration(
+                  shape: new BeveledRectangleBorder(
+                    borderRadius: _kFrontHeadingBevelRadius.begin,
+                  ),
+                  color: AppColors.appBlueDark,
+                ),
+                child: Column(
+                  children: [
+                    OpenFlutterTextTile(
+                      title: "Forgot your password? \n",
+                      subtitle:
+                          "We will send you a four digit security link to reset your password. This can be done either via SMS or email.",
+                    ),
+                    InputField(
+                      controller: emailController,
+                      label: 'phone number/email',
+                      hint:
+                          'Enter your phone number along with country code/Emailid',
+                      suffixWidget:
+                          SvgPicture.asset("assets/icons/email_icon.svg"),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    OpenFlutterButton(
+                        title: 'Send Code', onPressed: _validateAndSend),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Don't have an account?  ",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.normal,
+                              fontSize: 16,
+                              fontFamily: "Lato"),
                         ),
-                        OpenFlutterServiceButton(
-                          serviceType: ServiceType.Facebook,
-                          onPressed: () {},
+                        InkWell(
+                          child: Text(
+                            'Register',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                                fontFamily: "DIN"),
+                          ),
+                          onTap: () => {
+                            Navigator.of(context)
+                                .pushReplacementNamed(SmartShipRoutes.signin),
+                          },
                         ),
                       ],
                     ),
-                  ),
-                ],
+                    SizedBox(
+                      height: 250,
+                    ),
+                  ],
+                ),
               ),
-            ),
-          );
-        },
+            ],
+          ),
+        ),
       ),
     );
   }

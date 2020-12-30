@@ -85,6 +85,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.2.0-nullsafety.1"
+  circular_check_box:
+    dependency: "direct main"
+    description:
+      name: circular_check_box
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.4"
   cli_util:
     dependency: transitive
     description:
@@ -120,6 +127,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.1"
+  country_pickers:
+    dependency: "direct main"
+    description:
+      name: country_pickers
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.3.0"
   crypto:
     dependency: transitive
     description:
@@ -141,6 +155,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.3.4"
+  diacritic:
+    dependency: transitive
+    description:
+      name: diacritic
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.1"
+  dotted_border:
+    dependency: "direct main"
+    description:
+      name: dotted_border
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.7"
   equatable:
     dependency: "direct main"
     description:
@@ -181,6 +209,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "6.1.1"
+  flutter_country_picker:
+    dependency: "direct main"
+    description:
+      name: flutter_country_picker
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.6"
   flutter_device_locale:
     dependency: transitive
     description:
@@ -259,6 +294,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.1.4"
+  icon_font_generator:
+    dependency: "direct main"
+    description:
+      name: icon_font_generator
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.0"
   intl:
     dependency: "direct main"
     description:
@@ -392,6 +434,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.5"
+  register:
+    dependency: transitive
+    description:
+      name: register
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.1"
   rxdart:
     dependency: "direct main"
     description:
@@ -404,6 +453,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.99"
+  sliding_up_panel:
+    dependency: "direct main"
+    description:
+      name: sliding_up_panel
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.2"
   source_gen:
     dependency: transitive
     description:

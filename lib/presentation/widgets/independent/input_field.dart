@@ -86,6 +86,15 @@ class InputField extends StatelessWidget {
                   padding: const EdgeInsets.only(left: 0, top: 5, bottom: 3),
                   child: Row(
                     children: <Widget>[
+                      (required ?? false)
+                          ? Text(
+                              "*",
+                              textScaleFactor: 2,
+                              style: TextStyle(
+                                color: Colors.red,
+                              ),
+                            )
+                          : SizedBox.shrink(),
                       Flexible(
                         child: Text(
                           label.toUpperCase(),
@@ -101,15 +110,6 @@ class InputField extends StatelessWidget {
                           ),
                         ),
                       ),
-                      (required ?? false)
-                          ? Text(
-                              "*",
-                              textScaleFactor: 1,
-                              style: TextStyle(
-                                color: Colors.red,
-                              ),
-                            )
-                          : SizedBox.shrink(),
                     ],
                   ),
                 ),
@@ -142,15 +142,25 @@ class InputField extends StatelessWidget {
                 focusNode: focusNode,
                 obscureText: obscureText,
                 decoration: new InputDecoration(
-                    border: InputBorder.none,
-                    focusedBorder: InputBorder.none,
-                    contentPadding: EdgeInsets.only(
-                        left: 15, bottom: 11, top: 11, right: 15),
-                    hintText: hint,
-                    hintStyle: TextStyle(
-                        color: AppColors.appSkyBlue,
-                        fontSize: 16,
-                        fontFamily: 'DIN')),
+                  border: InputBorder.none,
+                  focusedBorder: InputBorder.none,
+                  contentPadding:
+                      EdgeInsets.only(left: 15, bottom: 11, top: 11, right: 15),
+                  hintText: hint,
+                  hintStyle: TextStyle(
+                      color: AppColors.appSkyBlue,
+                      fontSize: 16,
+                      fontFamily: 'DIN'),
+                  suffixIcon: suffixWidget == null
+                      ? suffixIcon == null
+                          ? null
+                          : Icon(
+                              suffixIcon,
+                              color: AppColors.white,
+                            )
+                      : suffixWidget,
+                  prefixIcon: prefix,
+                ),
               ),
             ),
           ),

@@ -24,7 +24,7 @@ class SmartWidget extends StatelessWidget {
           Positioned(
             top: MediaQuery.of(context).size.height * 0.05,
             child: Image.asset(
-              'assets/Gradient2.png',
+              'assets/Gradient.png',
               fit: BoxFit.cover,
               width: MediaQuery.of(context).size.width,
             ),

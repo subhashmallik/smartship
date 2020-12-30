@@ -6,17 +6,16 @@ abstract class SignUpEvent extends Equatable {
 }
 
 class SignUpPressed extends SignUpEvent {
+  final String firstName;
+  final String lastName;
+  final String phoneNumber;
   final String email;
   final String password;
-  final String name;
+  final String country;
 
-  SignUpPressed({this.name, this.email, this.password});
+  SignUpPressed(this.firstName, this.lastName, this.phoneNumber, this.email,
+      this.password, this.country);
 
   @override
-  List<Object> get props => [email, password];
+  List<Object> get props => [phoneNumber, password];
 }
-
-class SignUpPressedFacebook extends SignUpEvent {}
-
-class SignUpPressedGoogle extends SignUpEvent {}
-

@@ -25,13 +25,17 @@ class AuthenticationBloc
 
     if (event is LoggedIn) {
       Storage().token = event.token;
+      Storage().userId = event.userId;
       await _saveToken(event.token);
+      await _saveUserId(event.userId);
       yield Authenticated();
     }
 
     if (event is LoggedOut) {
       Storage().token = '';
+      Storage().userId = '';
       await _deleteToken();
+      await _deleteUserId();
       yield Unauthenticated();
     }
   }
@@ -49,5 +53,20 @@ class AuthenticationBloc
   /// read to keystore/keychain
   Future<String> _getToken() async {
     return await Storage().secureStorage.read(key: 'access_token') ?? '';
+  }
+
+  /// delete from keystore/keychain
+  Future<void> _deleteUserId() async {
+    await Storage().secureStorage.delete(key: 'user_id');
+  }
+
+  /// write to keystore/keychain
+  Future<void> _saveUserId(String userId) async {
+    await Storage().secureStorage.write(key: 'user_id', value: userId);
+  }
+
+  /// read to keystore/keychain
+  Future<String> _getUserId() async {
+    return await Storage().secureStorage.read(key: 'user_id') ?? '';
   }
 }

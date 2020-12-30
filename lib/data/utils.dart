@@ -11,7 +11,7 @@ class HttpClient {
 
   Uri createUri(String route, [Map<String, String> param = const {}]) {
     return Uri(
-      scheme: 'https',
+      scheme: 'http',
       host: ServerAddresses.serverAddress,
       path: route,
       queryParameters: param,

@@ -9,4 +9,5 @@ class Storage {
 
   FlutterSecureStorage secureStorage = FlutterSecureStorage();
   String token = '';
+  String userId = '';
 }

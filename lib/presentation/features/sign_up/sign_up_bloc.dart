@@ -25,41 +25,16 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
       yield SignUpProcessingState();
       try {
         final token = await userRepository.signUp(
-          name: event.name,
-          email: event.email,
-          password: event.password,
-        );
+            firstName: event.firstName,
+            lastName: event.lastName,
+            phoneNumber: event.phoneNumber,
+            email: event.email,
+            password: event.password,
+            country: event.country);
         // authenticationBloc.add(LoggedIn(token));
         yield SignUpFinishedState();
       } catch (error) {
-        yield SignUpErrorState(error);
-      }
-    }
-
-    // sign up with facebook
-    if (event is SignUpPressedFacebook) {
-      yield SignUpProcessingState();
-      try {
-        await Future.delayed(
-          Duration(milliseconds: 300),
-        ); //TODO use real auth service
-
-        yield SignUpFinishedState();
-      } catch (error) {
-        yield SignUpErrorState(error);
-      }
-    }
-
-    //sign up with google
-    if (event is SignUpPressedGoogle) {
-      yield SignUpProcessingState();
-      try {
-        await Future.delayed(
-          Duration(milliseconds: 100),
-        ); //TODO use real auth service
-
-        yield SignUpFinishedState();
-      } catch (error) {
+        print("error $error");
         yield SignUpErrorState(error);
       }
     }

@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:smartshipapp/config/routes.dart';
 import 'package:smartshipapp/config/theme.dart';
 import 'package:smartshipapp/presentation/features/sign_up/sign_up_bloc.dart';
 import 'package:smartshipapp/presentation/features/sign_up/sign_up_event.dart';
 import 'package:smartshipapp/presentation/features/sign_up/sign_up_state.dart';
 import 'package:smartshipapp/presentation/widgets/independent/custom_button.dart';
+import 'package:smartshipapp/presentation/widgets/independent/dropdown_input_field.dart';
 import 'package:smartshipapp/presentation/widgets/independent/input_field.dart';
 import 'package:smartshipapp/presentation/widgets/independent/text_tile.dart';
 
@@ -18,9 +19,13 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
+  final TextEditingController fController = TextEditingController();
+  final TextEditingController lController = TextEditingController();
+  final TextEditingController pController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  final TextEditingController nameController = TextEditingController();
+  final TextEditingController cController = TextEditingController();
+
   var _key = GlobalKey<ScaffoldState>();
   static const _PANEL_HEADER_HEIGHT = 32.0;
   static const double _kFrontHeadingHeight = 100.0;
@@ -40,9 +45,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
     begin: const BorderRadius.only(
       topRight: Radius.circular(50.0),
     ),
-    end: const BorderRadius.only(
-      topRight: Radius.circular(_kFrontHeadingHeight),
-    ),
   );
   @override
   Widget build(BuildContext context) {
@@ -51,12 +53,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
     sizeBetween = height / 20;
     return Scaffold(
       key: _key,
-      appBar: AppBar(
-        backgroundColor: AppColors.transparent,
-        brightness: Brightness.light,
-        elevation: 0,
-        iconTheme: IconThemeData(color: AppColors.black),
-      ),
       backgroundColor: AppColors.background,
       body: BlocConsumer<SignUpBloc, SignUpState>(
         listener: (context, state) {
@@ -85,66 +81,178 @@ class _SignUpScreenState extends State<SignUpScreen> {
               child: CircularProgressIndicator(),
             );
           }
-          return PhysicalShape(
-            color: AppColors.appBlueDark,
-            clipper: new ShapeBorderClipper(
-                shape: new BeveledRectangleBorder(
-              borderRadius: _kFrontHeadingBevelRadius.begin,
-            )),
-            child: SingleChildScrollView(
-              child: Container(
-                height: double.maxFinite,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    OpenFlutterTextTile(
-                      title: "Create Account",
-                      subtitle: "Enter your personal details.",
+          return SingleChildScrollView(
+            child: Container(
+              child: Stack(
+                children: [
+                  Container(
+                    decoration: new BoxDecoration(
+                      image: new DecorationImage(
+                        alignment: Alignment.topLeft,
+                        image: new AssetImage(
+                          'assets/images/create_account_picture.png',
+                        ),
+                        // fit: BoxFit.cover,
+                      ),
                     ),
-                    SizedBox(
-                      height: 10,
+                    child: Image.asset(
+                      'assets/images/signin/Gradient2-2.png',
+                      fit: BoxFit.cover,
+                      width: MediaQuery.of(context).size.width,
                     ),
-                    InputField(
-                      controller: nameController,
-                      label: 'first name',
-                      hint: 'Enter first name',
-                      // validator: Validator.valueExists,
+                  ),
+                  Positioned(
+                    top: 50,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Stack(
+                            children: [
+                              Container(
+                                child: Image.asset(
+                                    'assets/images/signin/Gradient2-1.png',
+                                    fit: BoxFit.cover,
+                                    width: MediaQuery.of(context).size.width *
+                                        0.25),
+                              ),
+                              Positioned(
+                                child: Container(
+                                  child: SvgPicture.asset(
+                                    'assets/images/logo.svg',
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
-                    InputField(
-                      controller: nameController,
-                      label: 'last name',
-                      hint: 'Enter last name',
-                      // validator: Validator.valueExists,
+                  ),
+                  Container(
+                    transform: Matrix4.translationValues(0.0, 250.0, 0.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Container(
+                          transform: Matrix4.translationValues(0.0, -50.0, 0.0),
+                          decoration: ShapeDecoration(
+                            shape: new BeveledRectangleBorder(
+                              borderRadius: _kFrontHeadingBevelRadius.begin,
+                            ),
+                            color: AppColors.appBlueDark,
+                          ),
+                          child: Column(
+                            children: [
+                              OpenFlutterTextTile(
+                                title: "Create Account",
+                                subtitle: "Enter your personal details.",
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              InputField(
+                                controller: fController,
+                                label: 'first name',
+                                hint: 'Enter first name',
+                                suffixWidget: SvgPicture.asset(
+                                    "assets/icons/name_icon.svg"),
+                              ),
+                              InputField(
+                                controller: lController,
+                                label: 'last name',
+                                hint: 'Enter last name',
+                                suffixWidget: SvgPicture.asset(
+                                    "assets/icons/name_icon.svg"),
+                              ),
+                              InputField(
+                                controller: pController,
+                                label: 'phone number',
+                                hint: 'Enter your phone number',
+                                suffixWidget: SvgPicture.asset(
+                                    "assets/icons/phone_icon.svg"),
+                                prefix: Padding(
+                                  padding: const EdgeInsets.only(right: 8),
+                                  child: SizedBox(
+                                    height: 50,
+                                    width: 80,
+                                    child: FlatButton(
+                                      onPressed: _validateAndSend,
+                                      child: Row(
+                                        children: [
+                                          Text(
+                                            "+91",
+                                            style: TextStyle(
+                                                color: AppColors.white),
+                                          ),
+                                          SizedBox(width: 2),
+                                          SvgPicture.asset(
+                                              "assets/icons/dropdown_icon.svg"),
+                                        ],
+                                      ),
+                                      color: Theme.of(context)
+                                          .textTheme
+                                          .caption
+                                          .color
+                                          .withOpacity(0.4),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              InputField(
+                                controller: emailController,
+                                label: 'Email',
+                                hint: 'Enter your email',
+                                suffixWidget: SvgPicture.asset(
+                                    "assets/icons/email_icon.svg"),
+                              ),
+                              InputField(
+                                controller: passwordController,
+                                label: 'create your Password',
+                                hint: 'create password',
+                                suffixWidget: SvgPicture.asset(
+                                    "assets/icons/password_icon.svg"),
+                              ),
+                              DropdownInputField(
+                                controller: cController,
+                                label: 'COUNTRY',
+                                items: ["Select Country", "India", "Arab"],
+                                // validator: Validator.valueExists,
+                              ),
+                              SizedBox(
+                                height: sizeBetween,
+                              ),
+                              OpenFlutterButton(
+                                  title: 'Confirm & Continue',
+                                  onPressed: _validateAndSend),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    'EN ',
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                  Icon(
+                                    Icons.language,
+                                    color: Colors.white,
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 250,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
-                    InputField(
-                      controller: nameController,
-                      label: 'phone number',
-                      hint: 'Enter your phone number',
-                      // validator: Validator.valueExists,
-                    ),
-                    InputField(
-                      controller: emailController,
-                      label: 'Email',
-                      hint: 'Enter your email',
-                    ),
-                    InputField(
-                      controller: passwordController,
-                      label: 'create your Password',
-                      hint: 'create password',
-                      //  validator: Validator.passwordCorrect,
-                    ),
-                    InputField(
-                      controller: nameController,
-                      label: 'Country',
-                      // validator: Validator.valueExists,
-                    ),
-                    OpenFlutterButton(
-                        title: 'SIGN UP', onPressed: _validateAndSend),
-                    SizedBox(
-                      height: sizeBetween,
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           );
@@ -158,12 +266,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
   void _validateAndSend() {
-    BlocProvider.of<SignUpBloc>(context).add(
-      SignUpPressed(
-        name: nameController.text,
-        email: emailController.text,
-        password: passwordController.text,
-      ),
-    );
+    BlocProvider.of<SignUpBloc>(context).add(SignUpPressed(
+        fController.text,
+        lController.text,
+        pController.text,
+        emailController.text,
+        passwordController.text,
+        cController.text));
   }
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:smartshipapp/config/routes.dart';
 
 class Splash extends StatefulWidget {
@@ -12,12 +12,9 @@ class Splash extends StatefulWidget {
 }
 
 class _SplashState extends State<Splash> {
-  final String smsa = 'assets/images/smsa.svg';
-  final String smsaLogo = 'assets/images/smsa_logo.svg';
-
   _navigate() async {
     Future.delayed(Duration(milliseconds: 1500), () {
-      Navigator.of(context).pushReplacementNamed(SmartShipRoutes.signup);
+      Navigator.of(context).pushReplacementNamed(SmartShipRoutes.signin);
     });
   }
 
@@ -32,22 +29,24 @@ class _SplashState extends State<Splash> {
     return Scaffold(
       body: Stack(
         children: [
-          Container(
-            height: double.infinity,
-            width: double.infinity,
-            child: Image.asset(
-              "assets/images/splash_bg1.png",
-              height: double.infinity,
-              width: double.infinity,
-              fit: BoxFit.cover,
+          Image(
+            image: new AssetImage(
+              'assets/images/splash/splash_image.png',
             ),
+            fit: BoxFit.cover,
+            width: MediaQuery.of(context).size.width,
           ),
-          SvgPicture.asset(
-            "assets/images/smart_ship_logo.svg",
-            color: Colors.transparent,
-            width: 357,
-            height: 100,
-          )
+          Image(
+            image: new AssetImage(
+              'assets/images/splash/gradient.png',
+            ),
+            fit: BoxFit.cover,
+            width: MediaQuery.of(context).size.width,
+          ),
+          Positioned(
+            bottom: MediaQuery.of(context).size.height * 0.20,
+            child: SvgPicture.asset('assets/images/logo.svg'),
+          ),
         ],
       ),
     );

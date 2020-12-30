@@ -1,34 +1,76 @@
 class ServerAddresses {
   //Server address of your project should go here
-  static const serverAddress = 'https://woocommerce.openflutterproject.com/';
-  //?consumer_key=ck_*****&consumer_secret=cs_**** goes here
-  static const _woocommerceKeys = '';
-  static const _categorySuffix = '/wp-json/wc/v3/products/categories/'; //id
-  static const _productSuffix = ' /wp-json/wc/v3/products/categories/';
-  static const _promoSuffix = ' /wp-json/wc/v3/reports/coupons/';
-  static const signUp = 'api/login/';
-  static const forgotPassword = ''; // TODO need an endpoint for this
-
-  /// For more information about wp-rest-api plugin
-  /// https://wordpress.org/plugins/jwt-authentication-for-wp-rest-api/
+  static const testServerAddress = "http://40.123.194.215:5002/api/";
+  static const serverAddress = '40.123.194.215:5002';
   static const authToken = 'wp-json/jwt-auth/v1/token';
+  static const merchantId = "3fa85f64-5717-4562-b3fc-2c963f66afa6";
+  //user
+  static const login = 'user/Login/';
+  static const forgotPassword = '/user/SendForgotPasswordLink';
+  static const userCreate = '/user/Create';
+  static const resetPassword = '/user/ResetPassword/';
+  static const userValidate = '/user/Validate/';
+  static const sendRegistrationOTP = '/user/SendRegistrationOTP/';
+  static const validateRegistrationOTP = '/user/ValidateRegistrationOTP/';
+  static const validateForgotPasswordOTP = '/user/ValidateForgotPasswordOTP/';
+  static const userActivate = '/user/Activate/';
+  static const existingUser = '/user/GetExistigUserByMobile/';
+  static const saveDocuments = '/user/SaveDocuments/';
+  static const saveBankDetails = '/api/user/SaveBankDetails/';
+  static const sendActivationLink = '/user/SendActivationLink/';
+  static const userGet = '/user/Get/';
+  static const userByUserId = '/user/ByUserId/';
+  static const userUpdate = '/user/Update/';
+  static const userStatusUpdate = '/user/StatusUpdate/';
+  static const userPackages = '/user/Packages/';
+  static const addressCreate = '/user/Address/Create/';
+  static const addressDefault = '/user/Address/Default/';
+  static const addressDelete = '/user/Address/Delete/';
+  static const addressUpdate = '/user/Address/Update';
+  static const userAddress = '/user/Address/';
+  static const sendSMS = '/user/User/SendSMS/';
+  static const userAddressSort = '/user/Address/Sort/';
+  static const userAddressSearch = '/user/Address/Search/';
 
-  //CACHED API (for test purposes only)
-  static const _productCategoriesCached = '/cachedapi/v3/products/categories.json';
-  static const _productsCached = '/cachedapi/v3/products/products.json';
-  static const _promosCached = '/cachedapi/v3/coupon.json';
+  //Product
+  static const getCategories = '/product/GetCategories/';
+  static const getProduct = '/product/GetProducts/';
+  static const getProductPriceList = '/product/GetProductPriceList/';
+  static const productPriceListByProduct =
+      '/product/GetProductPriceListByProduct/';
+  static const getProductPriceListByCategory =
+      '/product/GetProductPriceListByCategory/';
+  static const getCategoryByID = '/product/GetCategoryById/';
 
-  static bool useStatic = _woocommerceKeys.isEmpty;
+  //Order
+  static const createOrder = '/Order/CreateOrder';
+  static const getOrders = '/Order/GetOrders/';
+  static const saveOrdersDetails = '/Order/SaveOrderDetails/';
+  static const getOrdersDetails = '/Order/GetOrderDetails/';
+  static const getOrderByID = '/Order/GetOrderByOrderId/';
+  static const getOrderByFilter = '/Order/GetOrderByFilter/';
+  static const updateOrderStatus = '/Order/UpdateOrderStatus/';
+  static const createShipment = '/Order/CreateShipment/';
+  static const updateShipmentStatus = '/Order/UpdateShipmentStatus/';
+  static const updateShipmentInfo = '/Order/UpdateShipmentInfo/';
+  static const getShipments = '/Order/GetShipments/';
+  static const getShipmentInfo = '/Order/GetShipmentInfo/';
+  static const getShipmentDate = '/Order/GetShipmentsByDate/';
+  static const getShipmentByStatus = '/Order/GetShipmentsByStatus/';
+  static const getOrderStatus = '/Order/GetOrderStatus/';
+  static const getAWBLabel = '/Order/GetAWBLabel/';
+  static const getAWBCurrentStatus = '/Order/TrackAWBCurrentStatus/';
+  static const trackAWB = '/Order/TrackAWB/';
 
-  static String get productCategories => serverAddress  +
-    (useStatic ? _productCategoriesCached 
-      : serverAddress  +_categorySuffix + _woocommerceKeys);
-
-  static String get products => serverAddress  +
-    (useStatic ? _productsCached 
-      : serverAddress  +_productSuffix + _woocommerceKeys);
-
-  static String get promos => serverAddress  +
-    (useStatic ? _promosCached 
-      : serverAddress  +_promoSuffix + _woocommerceKeys);
+  //Wallet
+  static const walletCreate = '/wallet/Create/';
+  static const walletGet = '/wallet/Get/';
+  static const walletGetTransaction = '/wallet/GetTransactions/';
+  static const getDebitTransactionByID = '/wallet/GetDebitTransactionById/';
+  static const getCreditTransactionByID = '/wallet/GetCreditTransactionById/';
+  static const getTransactions = '/wallet/GetTransactions/';
+  static const getTransactionByStatus = '/wallet/GetTransactionsByStatus/';
+  static const getTransactionByStatusDate =
+      '/wallet/GetTransactionsByStatusDate/';
+  static const getWalletActivityLog = '/wallet/GetWalletActivityLog/';
 }

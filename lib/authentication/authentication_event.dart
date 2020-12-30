@@ -9,11 +9,12 @@ class AppStarted extends AuthenticationEvent {}
 
 class LoggedIn extends AuthenticationEvent {
   final String token;
+  final String userId;
 
-  LoggedIn(this.token);
+  LoggedIn(this.token, this.userId);
 
   @override
-  List<Object> get props => [token];
+  List<Object> get props => [token, userId];
 }
 
 class LoggedOut extends AuthenticationEvent {}

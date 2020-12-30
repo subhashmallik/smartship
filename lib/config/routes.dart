@@ -2,6 +2,9 @@ class SmartShipRoutes {
   static const splash = '/';
   static const signup = 'signup';
   static const signin = 'signin';
+  static const validateUser = 'validateUser';
+  static const termCondition = 'termCondition';
+  static const verifyOTP = 'verifyOTP';
   static const home = 'home';
   static const verification = 'verification';
   static const address = 'address';

@@ -18,5 +18,4 @@ class SignInErrorState extends SignInState {
   List<Object> get props => [error];
 }
 
-class SignInFinishedState extends SignInState {
-}
+class SignInFinishedState extends SignInState {}
