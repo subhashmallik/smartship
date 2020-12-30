@@ -64,7 +64,7 @@ class UserRepositoryImpl extends UserRepository {
   Future<OTPModel> validateForgotPasswordOTP(
       {String userActivationId, String opt, String merchantID}) async {
     return remoteUserRepository.validateRegistrationOTP(
-        userActivationId: userActivationId, opt: opt, merchantID: merchantID);
+        userActivationId: userActivationId, opt: opt);
   }
 
   @override

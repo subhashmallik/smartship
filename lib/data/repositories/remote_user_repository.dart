@@ -13,6 +13,7 @@ import '../utils.dart';
 import 'abstract/user_repository.dart';
 
 class RemoteUserRepository extends UserRepository {
+  final String testServer = ServerAddresses.testServerAddress;
   @override
   Future<LoginModel> signIn({
     @required String phoneNumber,
@@ -27,15 +28,29 @@ class RemoteUserRepository extends UserRepository {
     };
     String body = json.encode(data);
 
-    var response = await http.post(
-        "${ServerAddresses.testServerAddress}/${ServerAddresses.login}",
-        headers: {"Content-Type": "application/json"},
-        body: body);
+    var response = await http.post("$testServer/${ServerAddresses.login}",
+        headers: {"Content-Type": "application/json"}, body: body);
     Map jsonResponse = json.decode(response.body);
     if (response.statusCode != 200) {
       throw jsonResponse['message'];
     }
     return LoginModel.fromJson(jsonResponse);
+  }
+
+  @override
+  Future<ValidateUser> userValidate({String phoneNumber}) async {
+    var data = <String, String>{
+      'MerchantId': ServerAddresses.merchantId,
+      'MobileNumber': phoneNumber,
+    };
+    var response = await http.get(
+        "${ServerAddresses.testServerAddress}/${ServerAddresses.userValidate}/${ServerAddresses.merchantId}/$phoneNumber");
+    Map jsonResponse = json.decode(response.body);
+    if (response.statusCode != 200) {
+      throw jsonResponse['message'];
+    }
+    print("user validate res --- ${response.body.toString()}");
+    return ValidateUser.fromJson(jsonResponse);
   }
 
   @override
@@ -49,6 +64,7 @@ class RemoteUserRepository extends UserRepository {
   }) async {
     try {
       // var route = HttpClient().createUri(ServerAddresses.userCreate);
+
       var data = <String, String>{
         'MerchantId': ServerAddresses.merchantId,
         'FirstName': firstName,
@@ -58,9 +74,30 @@ class RemoteUserRepository extends UserRepository {
         'Password': password,
         'Country': country
       };
+      var create = Registration(
+              merchantId: ServerAddresses.merchantId,
+              userID: "00000000-0000-0000-0000-000000000000",
+              userInfoId: 0,
+              firstName: firstName,
+              lastName: lastName,
+              mobileNumber: phoneNumber,
+              mobileNumberCode: "91",
+              emailId: email,
+              password: password,
+              country: "in",
+              zipCode: "122001",
+              lattitude: 28.4594993591309,
+              longitude: 77.0266036987305,
+              dateOfBirth: "0001-01-01T00:00:00",
+              isEmailVerifed: false,
+              isPhoneVerified: true,
+              gender: 0,
+              companyId: 999,
+              prefferedLanguage: "EN")
+          .toJson();
       String body = json.encode(data);
       List<dynamic> list = [];
-      list.add(body);
+      list.add(create);
       var response = await http.post(
           "${ServerAddresses.testServerAddress}/${ServerAddresses.userCreate}",
           headers: {"Content-Type": "application/json"},
@@ -78,28 +115,16 @@ class RemoteUserRepository extends UserRepository {
   }
 
   @override
-  Future<AppUser> getUser() async {
-    try {
-      // TODO api call for user information
-      await Future.delayed(Duration(seconds: 2));
-
-      return AppUser();
-    } catch (error) {
-      rethrow;
-    }
-  }
-
-  @override
   Future<void> forgotPassword({
     @required String email,
   }) async {
     try {
-      var route = HttpClient().createUri(ServerAddresses.forgotPassword);
+      // var route = HttpClient().createUri(ServerAddresses.forgotPassword);
       var data = <String, String>{
         'email': email,
       };
 
-      var response = await http.post(route, body: data);
+      var response = await http.post("{}", body: data);
       Map jsonResponse = json.decode(response.body);
       if (response.statusCode != 200) {
         throw jsonResponse['message'];
@@ -120,7 +145,8 @@ class RemoteUserRepository extends UserRepository {
         'email': email,
       };
 
-      var response = await http.post(route, body: data);
+      var response = await http.get(
+          "$testServer/${ServerAddresses.sendRegistrationOTP}/${ServerAddresses.merchantId}/$phoneNumber");
       Map jsonResponse = json.decode(response.body);
       if (response.statusCode != 200) {
         throw jsonResponse['message'];
@@ -135,20 +161,25 @@ class RemoteUserRepository extends UserRepository {
   Future<OTPModel> validateForgotPasswordOTP(
       {String userActivationId, String opt, String merchantID}) async {
     try {
-      var route =
-          HttpClient().createUri(ServerAddresses.validateForgotPasswordOTP);
-      var data = <String, String>{
-        'UserActivationId': userActivationId,
-        'OTP': opt,
-        'MerchantId': merchantID,
-      };
-
-      var response = await http.post(route, body: data);
+      var response = await http.get(
+          "$testServer/${ServerAddresses.sendRegistrationOTP}/$merchantID/$userActivationId/$opt");
       Map jsonResponse = json.decode(response.body);
       if (response.statusCode != 200) {
         throw jsonResponse['message'];
       }
       return OTPModel.fromJson(jsonResponse);
+    } catch (error) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<AppUser> getUser() async {
+    try {
+      // TODO api call for user information
+      await Future.delayed(Duration(seconds: 2));
+
+      return AppUser();
     } catch (error) {
       rethrow;
     }
@@ -156,17 +187,10 @@ class RemoteUserRepository extends UserRepository {
 
   @override
   Future<OTPModel> validateRegistrationOTP(
-      {String userActivationId, String opt, String merchantID}) async {
+      {String userActivationId, String opt}) async {
     try {
-      var route =
-          HttpClient().createUri(ServerAddresses.validateRegistrationOTP);
-      var data = <String, String>{
-        'UserActivationId': userActivationId,
-        'OTP': opt,
-        'MerchantId': merchantID,
-      };
-
-      var response = await http.post(route, body: data);
+      var response = await http.get(
+          "$testServer/${ServerAddresses.sendRegistrationOTP}/${ServerAddresses.merchantId}/$userActivationId/$opt");
       Map jsonResponse = json.decode(response.body);
       if (response.statusCode != 200) {
         throw jsonResponse['message'];
@@ -175,22 +199,5 @@ class RemoteUserRepository extends UserRepository {
     } catch (error) {
       rethrow;
     }
-  }
-
-  @override
-  Future<ValidateUser> userValidate({String phoneNumber}) async {
-    var data = <String, String>{
-      'MerchantId': ServerAddresses.merchantId,
-      'MobileNumber': phoneNumber,
-    };
-    print("user validate data ${data.toString()}");
-    var response = await http.get(
-        "${ServerAddresses.testServerAddress}/${ServerAddresses.userValidate}/${ServerAddresses.merchantId}/$phoneNumber");
-    Map jsonResponse = json.decode(response.body);
-    if (response.statusCode != 200) {
-      throw jsonResponse['message'];
-    }
-    print("user validate res --- ${response.body.toString()}");
-    return ValidateUser.fromJson(jsonResponse);
   }
 }

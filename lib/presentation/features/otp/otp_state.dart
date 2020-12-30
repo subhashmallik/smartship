@@ -1,4 +1,4 @@
-part of 'otp_bloc.dart';
+import 'package:equatable/equatable.dart';
 
 abstract class OtpState extends Equatable {
   @override

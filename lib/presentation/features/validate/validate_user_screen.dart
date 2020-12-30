@@ -1,9 +1,12 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_country_picker/flutter_country_picker.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:smartshipapp/config/routes.dart';
 import 'package:smartshipapp/config/theme.dart';
+import 'package:smartshipapp/presentation/features/otp/otp_validate.dart';
 import 'package:smartshipapp/presentation/features/validate/user_validate.dart';
 import 'package:smartshipapp/presentation/features/validate/user_validate_bloc.dart';
 import 'package:smartshipapp/presentation/widgets/independent/custom_button.dart';
@@ -21,12 +24,14 @@ class _ValidateUserState extends State<ValidateUser> {
   final TextEditingController numberController = TextEditingController();
   var _key = GlobalKey<ScaffoldState>();
   double sizeBetween;
+  Timer _timer;
   final Tween<BorderRadius> _kFrontHeadingBevelRadius = new BorderRadiusTween(
     begin: const BorderRadius.only(
       topRight: Radius.circular(50.0),
     ),
   );
   Country _selected;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,10 +39,11 @@ class _ValidateUserState extends State<ValidateUser> {
         listener: (context, state) {
           // on success delete navigator stack and push to home
           if (state is UserValidateFinishedState) {
+            BlocProvider.of<UserValidateBloc>(context)
+                .add(OTPResendPressed(mobileNumber: numberController.text));
             Navigator.of(context).pushNamedAndRemoveUntil(
-              SmartShipRoutes.verifyOTP,
-              (Route<dynamic> route) => false,
-            );
+                SmartShipRoutes.verifyOTP, (Route<dynamic> route) => false,
+                arguments: numberController.text);
           }
           // on failure show a snackbar
           if (state is UserValidateErrorState) {
@@ -199,7 +205,8 @@ class _ValidateUserState extends State<ValidateUser> {
   }
 
   void _validateAndSend() {
-    print("contry ${_selected.dialingCode}");
+    //  print("contry ${_selected.dialingCode}");
+    //Navigator.of(context).pushReplacementNamed(SmartShipRoutes.verifyOTP);
     BlocProvider.of<UserValidateBloc>(context).add(UserValidatePressed(
         countryCode: _selected.dialingCode,
         phoneNumber: numberController.text.trim()));

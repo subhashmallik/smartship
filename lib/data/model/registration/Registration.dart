@@ -28,8 +28,8 @@ class Registration {
   bool isTNCAccepted;
   String landmark;
   String lastName;
-  int lattitude;
-  int longitude;
+  double lattitude;
+  double longitude;
   String merchantId;
   String mobileNumber;
   String password;
@@ -39,6 +39,7 @@ class Registration {
   String userID;
   int userInfoId;
   String zipCode;
+  String mobileNumberCode;
 
   Registration(
       {this.address1,
@@ -70,6 +71,7 @@ class Registration {
       this.longitude,
       this.merchantId,
       this.mobileNumber,
+      this.mobileNumberCode,
       this.password,
       this.prefferedLanguage,
       this.state,
@@ -117,6 +119,7 @@ class Registration {
       longitude: json['longitude'],
       merchantId: json['merchantId'],
       mobileNumber: json['mobileNumber'],
+      mobileNumberCode: json['mobileNumberCode'],
       password: json['password'],
       prefferedLanguage: json['prefferedLanguage'],
       state: json['state'],
@@ -155,6 +158,7 @@ class Registration {
     data['longitude'] = this.longitude;
     data['merchantId'] = this.merchantId;
     data['mobileNumber'] = this.mobileNumber;
+    data['MobileNumberCode'] = this.mobileNumberCode;
     data['password'] = this.password;
     data['prefferedLanguage'] = this.prefferedLanguage;
     data['state'] = this.state;

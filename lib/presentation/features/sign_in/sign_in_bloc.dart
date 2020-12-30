@@ -28,6 +28,8 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
           yield SignInErrorState("Enter Phone Number");
         } else if (event.password.isEmpty) {
           yield SignInErrorState("Enter Password");
+        } else if (event.countryCode.isEmpty) {
+          yield SignInErrorState("Select Country code");
         } else {
           LoginModel res = await userRepository.signIn(
             phoneNumber: "${event.countryCode}${event.phoneNumber}",

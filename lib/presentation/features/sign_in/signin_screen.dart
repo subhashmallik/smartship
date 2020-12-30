@@ -36,6 +36,7 @@ class _SignInScreenState extends State<SignInScreen> {
       topRight: Radius.circular(20.0),
     ),
   );
+
   Country _selected;
   @override
   Widget build(BuildContext context) {
@@ -290,13 +291,24 @@ class _SignInScreenState extends State<SignInScreen> {
   }
 
   void _validateAndSend() {
-    print("contry ${_selected.dialingCode}");
-    BlocProvider.of<SignInBloc>(context).add(
-      SignInPressed(
-        countryCode: _selected.dialingCode,
-        phoneNumber: numberController.text.trim(),
-        password: passwordController.text.trim(),
-      ),
-    );
+    //  print("contry ${_selected.dialingCode}");
+    if (_selected != null) {
+      BlocProvider.of<SignInBloc>(context).add(
+        SignInPressed(
+          countryCode: _selected.dialingCode,
+          phoneNumber: numberController.text.trim(),
+          password: passwordController.text.trim(),
+        ),
+      );
+    } else {
+      SnackBar(
+        shape: new BeveledRectangleBorder(
+          borderRadius: _kFrontHeadingBevelRadius1.begin,
+        ),
+        content: Text('${"state.error"}'),
+        backgroundColor: Colors.red,
+        duration: Duration(seconds: 3),
+      );
+    }
   }
 }

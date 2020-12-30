@@ -29,9 +29,7 @@ abstract class UserRepository {
   });
 
   Future<OTPModel> validateRegistrationOTP(
-      {@required String userActivationId,
-      @required String opt,
-      @required String merchantID});
+      {@required String userActivationId, @required String opt});
 
   /// Get the user information and return it as [AppUser]
   Future<AppUser> getUser();

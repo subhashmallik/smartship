@@ -9,6 +9,7 @@ import 'package:flutter_translate/localized_app.dart';
 import 'package:smartshipapp/presentation/features/account/account_screen.dart';
 import 'package:smartshipapp/presentation/features/forget_password/forget_password_bloc.dart';
 import 'package:smartshipapp/presentation/features/forget_password/forget_password_screen.dart';
+import 'package:smartshipapp/presentation/features/otp/otp_bloc.dart';
 import 'package:smartshipapp/presentation/features/otp/terms_conditions.dart';
 import 'package:smartshipapp/presentation/features/otp/verify_otp_screen.dart';
 import 'package:smartshipapp/presentation/features/sign_in/sign_in_bloc.dart';
@@ -94,7 +95,7 @@ class SmartShipApp extends StatelessWidget {
             GlobalWidgetsLocalizations.delegate,
             localizationDelegate,
           ],
-          //onGenerateRoute: _registerRoutesWithParameters,
+          onGenerateRoute: _registerRoutesWithParameters,
           supportedLocales: localizationDelegate.supportedLocales,
           debugShowCheckedModeBanner: false,
           locale: localizationDelegate.currentLocale,
@@ -120,7 +121,7 @@ class SmartShipApp extends StatelessWidget {
       SmartShipRoutes.splash: (context) => Splash(),
       SmartShipRoutes.validateUser: (context) => _buildUserValidateBloc(),
       SmartShipRoutes.termCondition: (context) => TermCondition(),
-      SmartShipRoutes.verifyOTP: (context) => VerifyOTP(),
+      SmartShipRoutes.verifyOTP: (context) => _otpBloc(),
       SmartShipRoutes.home: (context) => HomeScreen(),
       SmartShipRoutes.account: (context) => AccountScreen(),
       SmartShipRoutes.signin: (context) => _buildSignInBloc(),
@@ -157,6 +158,15 @@ class SmartShipApp extends StatelessWidget {
     );
   }
 
+  BlocProvider<OtpBloc> _otpBloc() {
+    return BlocProvider<OtpBloc>(
+      create: (context) => OtpBloc(
+        userRepository: RepositoryProvider.of<UserRepository>(context),
+      ),
+      child: VerifyOTP(),
+    );
+  }
+
   BlocProvider<SignUpBloc> _buildSignUpBloc() {
     return BlocProvider<SignUpBloc>(
       create: (context) => SignUpBloc(
@@ -168,10 +178,21 @@ class SmartShipApp extends StatelessWidget {
   }
 
   Route _registerRoutesWithParameters(RouteSettings settings) {
-    return MaterialPageRoute(
-      builder: (context) {
-        return SignInScreen();
-      },
-    );
+    if (settings.name == SmartShipRoutes.verifyOTP) {
+      String args = settings.arguments;
+      return MaterialPageRoute(
+        builder: (context) {
+          return VerifyOTP(
+            mobileNumber: args,
+          );
+        },
+      );
+    } else {
+      return MaterialPageRoute(
+        builder: (context) {
+          return HomeScreen();
+        },
+      );
+    }
   }
 }
