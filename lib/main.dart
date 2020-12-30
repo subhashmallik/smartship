@@ -9,6 +9,7 @@ import 'package:flutter_translate/localized_app.dart';
 import 'package:smartshipapp/presentation/features/account/account_screen.dart';
 import 'package:smartshipapp/presentation/features/forget_password/forget_password_bloc.dart';
 import 'package:smartshipapp/presentation/features/forget_password/forget_password_screen.dart';
+import 'package:smartshipapp/presentation/features/home/landing.dart';
 import 'package:smartshipapp/presentation/features/otp/otp_bloc.dart';
 import 'package:smartshipapp/presentation/features/otp/terms_conditions.dart';
 import 'package:smartshipapp/presentation/features/otp/verify_otp_screen.dart';
@@ -122,7 +123,7 @@ class SmartShipApp extends StatelessWidget {
       SmartShipRoutes.validateUser: (context) => _buildUserValidateBloc(),
       SmartShipRoutes.termCondition: (context) => TermCondition(),
       SmartShipRoutes.verifyOTP: (context) => _otpBloc(),
-      SmartShipRoutes.home: (context) => HomeScreen(),
+      SmartShipRoutes.home: (context) => Landing(),
       SmartShipRoutes.account: (context) => AccountScreen(),
       SmartShipRoutes.signin: (context) => _buildSignInBloc(),
       SmartShipRoutes.signup: (context) => _buildSignUpBloc(),

@@ -14,3 +14,13 @@ class UserValidatePressed extends UserValidateEvent {
   @override
   List<Object> get props => [phoneNumber];
 }
+
+class SendOTP extends UserValidateEvent {
+  final String phoneNumber;
+  final String countryCode;
+
+  SendOTP({this.countryCode, this.phoneNumber});
+
+  @override
+  List<Object> get props => [phoneNumber];
+}

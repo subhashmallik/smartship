@@ -6,7 +6,6 @@ import 'package:flutter_country_picker/flutter_country_picker.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:smartshipapp/config/routes.dart';
 import 'package:smartshipapp/config/theme.dart';
-import 'package:smartshipapp/presentation/features/otp/otp_validate.dart';
 import 'package:smartshipapp/presentation/features/validate/user_validate.dart';
 import 'package:smartshipapp/presentation/features/validate/user_validate_bloc.dart';
 import 'package:smartshipapp/presentation/widgets/independent/custom_button.dart';
@@ -39,8 +38,6 @@ class _ValidateUserState extends State<ValidateUser> {
         listener: (context, state) {
           // on success delete navigator stack and push to home
           if (state is UserValidateFinishedState) {
-            BlocProvider.of<UserValidateBloc>(context)
-                .add(OTPResendPressed(mobileNumber: numberController.text));
             Navigator.of(context).pushNamedAndRemoveUntil(
                 SmartShipRoutes.verifyOTP, (Route<dynamic> route) => false,
                 arguments: numberController.text);
