@@ -5,12 +5,13 @@ import 'package:flutter_country_picker/flutter_country_picker.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:smartshipapp/config/routes.dart';
 import 'package:smartshipapp/config/theme.dart';
+import 'package:smartshipapp/presentation/features/home/home_screen.dart';
+import 'package:smartshipapp/presentation/features/home/landing.dart';
 import 'package:smartshipapp/presentation/features/sign_in/sign_in_state.dart';
 import 'package:smartshipapp/presentation/widgets/independent/custom_button.dart';
 import 'package:smartshipapp/presentation/widgets/independent/input_field.dart';
 
 import 'sign_in_bloc.dart';
-import 'sign_in_event.dart';
 
 class SignInScreen extends StatefulWidget {
   @override
@@ -37,6 +38,7 @@ class _SignInScreenState extends State<SignInScreen> {
     ),
   );
   Country _selected;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -170,12 +172,14 @@ class _SignInScreenState extends State<SignInScreen> {
                           hint: 'Enter your phone number',
                           prefix: CountryPicker(
                             dense: false,
-                            showFlag: true, //displays flag, true by default
-                            showDialingCode:
-                                true, //displays dialing code, false by default
-                            showName:
-                                false, //displays country name, true by default
-                            showCurrency: false, //eg. 'British pound'
+                            showFlag: true,
+                            //displays flag, true by default
+                            showDialingCode: true,
+                            //displays dialing code, false by default
+                            showName: false,
+                            //displays country name, true by default
+                            showCurrency: false,
+                            //eg. 'British pound'
                             showCurrencyISO: false,
                             onChanged: (Country country) {
                               setState(() {
@@ -290,13 +294,16 @@ class _SignInScreenState extends State<SignInScreen> {
   }
 
   void _validateAndSend() {
-    print("contry ${_selected.dialingCode}");
-    BlocProvider.of<SignInBloc>(context).add(
-      SignInPressed(
-        countryCode: _selected.dialingCode,
-        phoneNumber: numberController.text.trim(),
-        password: passwordController.text.trim(),
-      ),
-    );
+    // print("contry ${_selected.dialingCode}");
+    // BlocProvider.of<SignInBloc>(context).add(
+    //   SignInPressed(
+    //     countryCode: _selected.dialingCode,
+    //     phoneNumber: numberController.text.trim(),
+    //     password: passwordController.text.trim(),
+    //   ),
+    // );
+
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (context) => Landing()));
   }
 }
