@@ -291,10 +291,10 @@ class _SignInScreenState extends State<SignInScreen> {
   }
 
   void _validateAndSend() {
-    Navigator.of(context).pushNamedAndRemoveUntil(
-      SmartShipRoutes.home,
-      (Route<dynamic> route) => false,
-    );
+    // Navigator.of(context).pushNamedAndRemoveUntil(
+    //   SmartShipRoutes.home,
+    //   (Route<dynamic> route) => false,
+    // );
     //  print("contry ${_selected.dialingCode}");
     if (_selected != null) {
       BlocProvider.of<SignInBloc>(context).add(

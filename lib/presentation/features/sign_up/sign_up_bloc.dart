@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smartshipapp/authentication/authentication_bloc.dart';
+import 'package:smartshipapp/data/model/CreateUser.dart';
 import 'package:smartshipapp/data/repositories/abstract/user_repository.dart';
 
 import 'sign_up.dart';
@@ -22,9 +23,9 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
   ) async* {
     // normal sign up
     if (event is SignUpPressed) {
-      yield SignUpProcessingState();
+      // yield SignUpProcessingState();
       try {
-        final token = await userRepository.signUp(
+        final CreateUser res = await userRepository.signUp(
             firstName: event.firstName,
             lastName: event.lastName,
             phoneNumber: event.phoneNumber,
@@ -32,7 +33,11 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
             password: event.password,
             country: event.country);
         // authenticationBloc.add(LoggedIn(token));
-        yield SignUpFinishedState();
+        if (res.entity != null) {
+          yield SignUpFinishedState();
+        } else {
+          yield SignUpErrorState(res.message);
+        }
       } catch (error) {
         print("error $error");
         yield SignUpErrorState(error);

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:smartshipapp/data/model/CreateUser.dart';
 import 'package:smartshipapp/data/model/LoginModel.dart';
 import 'package:smartshipapp/data/model/OTPModel.dart';
+import 'package:smartshipapp/data/model/SendOTPModel.dart';
 import 'package:smartshipapp/data/model/ValidateUser.dart';
 import 'package:smartshipapp/data/model/app_user.dart';
-import 'package:smartshipapp/data/model/registration/Registration.dart';
 import 'package:smartshipapp/data/repositories/remote_user_repository.dart';
 
 import 'abstract/user_repository.dart';
@@ -37,7 +38,7 @@ class UserRepositoryImpl extends UserRepository {
   }
 
   @override
-  Future<Registration> signUp(
+  Future<CreateUser> signUp(
       {String firstName,
       String lastName,
       String phoneNumber,
@@ -54,7 +55,7 @@ class UserRepositoryImpl extends UserRepository {
   }
 
   @override
-  Future<OTPModel> sendRegistrationOTP(
+  Future<SendOTPModel> sendRegistrationOTP(
       {String merchantId, String phoneNumber, String email}) async {
     return remoteUserRepository.sendRegistrationOTP(
         merchantId: merchantId, phoneNumber: phoneNumber, email: email);
@@ -70,8 +71,8 @@ class UserRepositoryImpl extends UserRepository {
   @override
   Future<OTPModel> validateRegistrationOTP(
       {String userActivationId, String opt, String merchantID}) async {
-    return remoteUserRepository.validateForgotPasswordOTP(
-        userActivationId: userActivationId, opt: opt, merchantID: merchantID);
+    return remoteUserRepository.validateRegistrationOTP(
+        userActivationId: userActivationId, opt: opt);
   }
 
   @override

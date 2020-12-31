@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_country_picker/flutter_country_picker.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:smartshipapp/config/routes.dart';
 import 'package:smartshipapp/config/theme.dart';
@@ -30,7 +31,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   static const _PANEL_HEADER_HEIGHT = 32.0;
   static const double _kFrontHeadingHeight = 100.0;
   double sizeBetween;
-
+  Country _selected;
   @override
   void initState() {
     super.initState();
@@ -58,10 +59,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
         listener: (context, state) {
           // on success delete navigator stack and push to home
           if (state is SignUpFinishedState) {
-            // Navigator.of(context).pushNamedAndRemoveUntil(
-            //   SmartShipRoutes.home,
-            //   (Route<dynamic> route) => false,
-            // );
+            Navigator.of(context).pushNamedAndRemoveUntil(
+              SmartShipRoutes.landing,
+              (Route<dynamic> route) => false,
+            );
           }
           // on failure show a snackbar
           if (state is SignUpErrorState) {
@@ -172,32 +173,22 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 hint: 'Enter your phone number',
                                 suffixWidget: SvgPicture.asset(
                                     "assets/icons/phone_icon.svg"),
-                                prefix: Padding(
-                                  padding: const EdgeInsets.only(right: 8),
-                                  child: SizedBox(
-                                    height: 50,
-                                    width: 80,
-                                    child: FlatButton(
-                                      onPressed: _validateAndSend,
-                                      child: Row(
-                                        children: [
-                                          Text(
-                                            "+91",
-                                            style: TextStyle(
-                                                color: AppColors.white),
-                                          ),
-                                          SizedBox(width: 2),
-                                          SvgPicture.asset(
-                                              "assets/icons/dropdown_icon.svg"),
-                                        ],
-                                      ),
-                                      color: Theme.of(context)
-                                          .textTheme
-                                          .caption
-                                          .color
-                                          .withOpacity(0.4),
-                                    ),
-                                  ),
+                                prefix: CountryPicker(
+                                  dense: false,
+                                  showFlag:
+                                      true, //displays flag, true by default
+                                  showDialingCode:
+                                      true, //displays dialing code, false by default
+                                  showName:
+                                      false, //displays country name, true by default
+                                  showCurrency: false, //eg. 'British pound'
+                                  showCurrencyISO: false,
+                                  onChanged: (Country country) {
+                                    setState(() {
+                                      _selected = country;
+                                    });
+                                  },
+                                  selectedCountry: _selected,
                                 ),
                               ),
                               InputField(

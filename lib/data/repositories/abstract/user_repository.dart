@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:smartshipapp/data/model/CreateUser.dart';
 import 'package:smartshipapp/data/model/LoginModel.dart';
 import 'package:smartshipapp/data/model/OTPModel.dart';
+import 'package:smartshipapp/data/model/SendOTPModel.dart';
 import 'package:smartshipapp/data/model/ValidateUser.dart';
 import 'package:smartshipapp/data/model/app_user.dart';
-import 'package:smartshipapp/data/model/registration/Registration.dart';
 
 abstract class UserRepository {
   Future<LoginModel> signIn({
@@ -13,7 +14,7 @@ abstract class UserRepository {
 
   Future<ValidateUser> userValidate({@required String phoneNumber});
 
-  Future<Registration> signUp({
+  Future<CreateUser> signUp({
     @required String firstName,
     @required String lastName,
     @required String phoneNumber,
@@ -22,7 +23,7 @@ abstract class UserRepository {
     @required String country,
   });
 
-  Future<OTPModel> sendRegistrationOTP({
+  Future<SendOTPModel> sendRegistrationOTP({
     @required String merchantId,
     @required String phoneNumber,
     @required String email,

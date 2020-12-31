@@ -3,8 +3,14 @@ class Entity {
   String name;
   String token;
   String userID;
+  String userActivationId;
 
-  Entity({this.merchantId, this.name, this.token, this.userID});
+  Entity(
+      {this.merchantId,
+      this.name,
+      this.token,
+      this.userID,
+      this.userActivationId});
 
   factory Entity.fromJson(Map<String, dynamic> json) {
     return Entity(
@@ -12,6 +18,7 @@ class Entity {
       name: json['name'],
       token: json['token'],
       userID: json['userID'],
+      userActivationId: json['UserActivationId'],
     );
   }
 

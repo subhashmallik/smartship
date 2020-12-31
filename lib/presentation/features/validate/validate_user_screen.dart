@@ -30,6 +30,7 @@ class _ValidateUserState extends State<ValidateUser> {
     ),
   );
   Country _selected;
+  String userActivationId;
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +41,8 @@ class _ValidateUserState extends State<ValidateUser> {
           if (state is UserValidateFinishedState) {
             Navigator.of(context).pushNamedAndRemoveUntil(
                 SmartShipRoutes.verifyOTP, (Route<dynamic> route) => false,
-                arguments: numberController.text);
+                arguments: OTPArguments(
+                    state.res.entity.userActivationId, numberController.text));
           }
           // on failure show a snackbar
           if (state is UserValidateErrorState) {
@@ -53,6 +55,14 @@ class _ValidateUserState extends State<ValidateUser> {
                 backgroundColor: Colors.red,
                 duration: Duration(seconds: 3),
               ),
+            );
+          }
+          if (state is SendOTPState) {
+            BlocProvider.of<UserValidateBloc>(context).add(SendOTP(
+                countryCode: _selected.dialingCode,
+                phoneNumber: numberController.text.trim()));
+            return Center(
+              child: CircularProgressIndicator(),
             );
           }
         },
@@ -208,4 +218,11 @@ class _ValidateUserState extends State<ValidateUser> {
         countryCode: _selected.dialingCode,
         phoneNumber: numberController.text.trim()));
   }
+}
+
+class OTPArguments {
+  String userActivationId;
+  String number;
+
+  OTPArguments(this.userActivationId, this.number);
 }

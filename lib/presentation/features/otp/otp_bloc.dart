@@ -1,7 +1,9 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:smartshipapp/config/server_addresses.dart';
 import 'package:smartshipapp/data/model/OTPModel.dart';
+import 'package:smartshipapp/data/model/SendOTPModel.dart';
 import 'package:smartshipapp/data/repositories/abstract/user_repository.dart';
 
 import 'otp_validate.dart';
@@ -24,7 +26,8 @@ class OtpBloc extends Bloc<OtpEvent, OtpState> {
         } else {
           OTPModel res = await userRepository.validateRegistrationOTP(
               userActivationId: event.activationId, opt: event.otp);
-          if (res.entity) {
+          print("validate otp res ---- ${res.toString()}");
+          if (res.errorDetails == null) {
             yield OTPFinishedState();
           } else {
             yield OTPErrorState(res.message);
@@ -41,9 +44,11 @@ class OtpBloc extends Bloc<OtpEvent, OtpState> {
         if (event.mobileNumber.isEmpty) {
           yield OTPErrorState("Mobile Number is Empty.");
         } else {
-          OTPModel res = await userRepository.sendRegistrationOTP(
-              phoneNumber: event.mobileNumber);
-          if (res.entity) {
+          SendOTPModel res = await userRepository.sendRegistrationOTP(
+              merchantId: ServerAddresses.merchantId,
+              phoneNumber: event.mobileNumber,
+              email: "testemail@tt.com");
+          if (res.errorDetails != null) {
             yield OTPFinishedState();
           } else {
             yield OTPErrorState(res.message);

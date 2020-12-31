@@ -23,6 +23,7 @@ import 'package:smartshipapp/presentation/features/validate/validate_user_screen
 
 import 'authentication/authentication_bloc.dart';
 import 'authentication/authentication_event.dart';
+import 'config/config.dart';
 import 'config/routes.dart';
 import 'config/theme.dart';
 import 'data/repositories/abstract/user_repository.dart';
@@ -86,6 +87,12 @@ void main() async {
 class SmartShipApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+        systemNavigationBarColor: AppConfig.kSwatch[900],
+      ),
+    );
     var localizationDelegate = LocalizedApp.of(context).delegate;
 
     return LocalizationProvider(
@@ -124,6 +131,7 @@ class SmartShipApp extends StatelessWidget {
       SmartShipRoutes.termCondition: (context) => TermCondition(),
       SmartShipRoutes.verifyOTP: (context) => _otpBloc(),
       SmartShipRoutes.home: (context) => Landing(),
+      SmartShipRoutes.landing: (context) => Landing(),
       SmartShipRoutes.account: (context) => AccountScreen(),
       SmartShipRoutes.signin: (context) => _buildSignInBloc(),
       SmartShipRoutes.signup: (context) => _buildSignUpBloc(),
@@ -180,7 +188,7 @@ class SmartShipApp extends StatelessWidget {
 
   Route _registerRoutesWithParameters(RouteSettings settings) {
     if (settings.name == SmartShipRoutes.verifyOTP) {
-      String args = settings.arguments;
+      OTPArguments args = settings.arguments;
       return MaterialPageRoute(
         builder: (context) {
           return VerifyOTP(

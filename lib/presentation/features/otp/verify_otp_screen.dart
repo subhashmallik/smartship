@@ -8,6 +8,7 @@ import 'package:smartshipapp/config/routes.dart';
 import 'package:smartshipapp/config/theme.dart';
 import 'package:smartshipapp/presentation/features/otp/otp_bloc.dart';
 import 'package:smartshipapp/presentation/features/otp/otp_validate.dart';
+import 'package:smartshipapp/presentation/features/validate/validate_user_screen.dart';
 import 'package:smartshipapp/presentation/widgets/independent/custom_button.dart';
 import 'package:smartshipapp/presentation/widgets/independent/text_tile.dart';
 
@@ -64,7 +65,9 @@ class _VerifyOTPState extends State<VerifyOTP> {
 
   @override
   Widget build(BuildContext context) {
-    final String args = ModalRoute.of(context).settings.arguments;
+    //OTPArguments args = ModalRoute.of(context).settings.arguments;
+    final OTPArguments args = ModalRoute.of(context).settings.arguments;
+    userActivationId = args.userActivationId;
     //  print("number --- $args");
     return Scaffold(
       body: BlocConsumer<OtpBloc, OtpState>(
@@ -158,7 +161,7 @@ class _VerifyOTPState extends State<VerifyOTP> {
                         OpenFlutterTextTile(
                           title: "OTP Verification",
                           subtitle:
-                              "One Time Password (OTP) has been sent to your mobile $args, please enter the same here for verification",
+                              "One Time Password (OTP) has been sent to your mobile ${args.number}., please enter the same here for verification",
                         ),
                         SizedBox(
                           height: 10,
@@ -211,7 +214,7 @@ class _VerifyOTPState extends State<VerifyOTP> {
                                 fontSize: 16,
                                 fontFamily: "DIN"),
                           ),
-                          onTap: () => {_resendAndSend(args)},
+                          onTap: () => {_resendAndSend(args.number)},
                         ),
                         SizedBox(
                           height: 20,
@@ -266,7 +269,9 @@ class _VerifyOTPState extends State<VerifyOTP> {
   }
 
   _validateAndSend() {
-    otp = "$controller_a$controller_b$controller_c$controller_d";
+    otp =
+        "${controller_a.text}${controller_b.text}${controller_c.text}${controller_d.text}";
+    print("otp --- $otp");
     BlocProvider.of<OtpBloc>(context)
         .add(OTPValidatePressed(activationId: userActivationId, otp: otp));
   }

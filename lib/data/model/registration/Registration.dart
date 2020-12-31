@@ -3,12 +3,12 @@ import 'CompanyInfo.dart';
 import 'Document.dart';
 
 class Registration {
-  String address1;
-  String address2;
-  bool allowLocationAccess;
-  bool allowPushNotifications;
-  String approvalDateTime;
-  String approvalStatus;
+  String address1 = "";
+  String address2 = "";
+  bool allowLocationAccess = false;
+  bool allowPushNotifications = false;
+  String approvalDateTime = "";
+  String approvalStatus = "";
   BankDetail bankDetail;
   String city;
   String cityName;
@@ -176,5 +176,10 @@ class Registration {
       data['documents'] = this.documents.map((v) => v.toJson()).toList();
     }
     return data;
+  }
+
+  @override
+  String toString() {
+    return 'Registration{address1: $address1, address2: $address2, allowLocationAccess: $allowLocationAccess, allowPushNotifications: $allowPushNotifications, approvalDateTime: $approvalDateTime, approvalStatus: $approvalStatus, bankDetail: $bankDetail, city: $city, cityName: $cityName, comment: $comment, companyId: $companyId, companyInfo: $companyInfo, country: $country, countryName: $countryName, dateOfBirth: $dateOfBirth, documents: $documents, emailId: $emailId, firstName: $firstName, gender: $gender, isActive: $isActive, isEmailVerifed: $isEmailVerifed, isPhoneVerified: $isPhoneVerified, isTNCAccepted: $isTNCAccepted, landmark: $landmark, lastName: $lastName, lattitude: $lattitude, longitude: $longitude, merchantId: $merchantId, mobileNumber: $mobileNumber, password: $password, prefferedLanguage: $prefferedLanguage, state: $state, stateName: $stateName, userID: $userID, userInfoId: $userInfoId, zipCode: $zipCode, mobileNumberCode: $mobileNumberCode}';
   }
 }

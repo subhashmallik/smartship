@@ -1,17 +1,19 @@
-import 'ErrorDetails.dart';
+import 'package:smartshipapp/data/model/ErrorDetails.dart';
 
-class OTPModel {
+import 'Entity.dart';
+
+class SendOTPModel {
   int code;
-  bool entity;
+  Entity entity;
   ErrorDetails errorDetails;
   String message;
 
-  OTPModel({this.code, this.entity, this.errorDetails, this.message});
+  SendOTPModel({this.code, this.entity, this.errorDetails, this.message});
 
-  factory OTPModel.fromJson(Map<String, dynamic> json) {
-    return OTPModel(
+  factory SendOTPModel.fromJson(Map<String, dynamic> json) {
+    return SendOTPModel(
       code: json['code'],
-      entity: json['entity'],
+      entity: json['entity'] != null ? Entity.fromJson(json['entity']) : null,
       errorDetails: json['errorDetails'] != null
           ? ErrorDetails.fromJson(json['errorDetails'])
           : null,
@@ -22,16 +24,13 @@ class OTPModel {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['code'] = this.code;
-    data['entity'] = this.entity;
     data['message'] = this.message;
+    if (this.entity != null) {
+      data['entity'] = this.entity.toJson();
+    }
     if (this.errorDetails != null) {
       data['errorDetails'] = this.errorDetails.toJson();
     }
     return data;
-  }
-
-  @override
-  String toString() {
-    return 'OTPModel{code: $code, entity: $entity, errorDetails: $errorDetails, message: $message}';
   }
 }

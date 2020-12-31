@@ -10,7 +10,7 @@ class ServerAddresses {
   static const userCreate = '/user/Create';
   static const resetPassword = '/user/ResetPassword/';
   static const userValidate = '/user/Validate/';
-  static const sendRegistrationOTP = '/user/SendRegistrationOTP/';
+  static const sendRegistrationOTP = 'user/SendRegistrationOTP/';
   static const validateRegistrationOTP = '/user/ValidateRegistrationOTP/';
   static const validateForgotPasswordOTP = '/user/ValidateForgotPasswordOTP/';
   static const userActivate = '/user/Activate/';

@@ -6,6 +6,7 @@ class SmartShipRoutes {
   static const termCondition = 'termCondition';
   static const verifyOTP = 'verifyOTP';
   static const home = 'home';
+  static const landing = 'home';
   static const verification = 'verification';
   static const address = 'address';
   static const wallet = 'wallet';

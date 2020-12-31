@@ -1,15 +1,15 @@
-import 'ErrorDetails.dart';
+import 'package:smartshipapp/data/model/ErrorDetails.dart';
 
-class OTPModel {
+class CreateUser {
   int code;
-  bool entity;
+  String entity;
   ErrorDetails errorDetails;
   String message;
 
-  OTPModel({this.code, this.entity, this.errorDetails, this.message});
+  CreateUser({this.code, this.entity, this.errorDetails, this.message});
 
-  factory OTPModel.fromJson(Map<String, dynamic> json) {
-    return OTPModel(
+  factory CreateUser.fromJson(Map<String, dynamic> json) {
+    return CreateUser(
       code: json['code'],
       entity: json['entity'],
       errorDetails: json['errorDetails'] != null
@@ -28,10 +28,5 @@ class OTPModel {
       data['errorDetails'] = this.errorDetails.toJson();
     }
     return data;
-  }
-
-  @override
-  String toString() {
-    return 'OTPModel{code: $code, entity: $entity, errorDetails: $errorDetails, message: $message}';
   }
 }
