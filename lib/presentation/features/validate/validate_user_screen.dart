@@ -41,8 +41,8 @@ class _ValidateUserState extends State<ValidateUser> {
           if (state is UserValidateFinishedState) {
             Navigator.of(context).pushNamedAndRemoveUntil(
                 SmartShipRoutes.verifyOTP, (Route<dynamic> route) => false,
-                arguments: OTPArguments(
-                    state.res.entity.userActivationId, numberController.text));
+                arguments: OTPArguments(state.res.entity.userActivationId,
+                    numberController.text, false));
           }
           // on failure show a snackbar
           if (state is UserValidateErrorState) {
@@ -223,6 +223,6 @@ class _ValidateUserState extends State<ValidateUser> {
 class OTPArguments {
   String userActivationId;
   String number;
-
-  OTPArguments(this.userActivationId, this.number);
+  bool forgotPassword = false;
+  OTPArguments(this.userActivationId, this.number, this.forgotPassword);
 }

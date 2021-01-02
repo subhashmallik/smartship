@@ -1,24 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:smartshipapp/config/config.dart';
-import 'package:smartshipapp/config/routes.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:smartshipapp/config/theme.dart';
-import 'package:smartshipapp/presentation/features/validate/validate_user_screen.dart';
+import 'package:smartshipapp/presentation/features/reset_password/reset_password_bloc.dart';
+import 'package:smartshipapp/presentation/features/reset_password/reset_password_state.dart';
 import 'package:smartshipapp/presentation/widgets/independent/custom_button.dart';
 import 'package:smartshipapp/presentation/widgets/independent/input_field.dart';
 import 'package:smartshipapp/presentation/widgets/independent/text_tile.dart';
 
-import 'forget_password.dart';
-
-class ForgetPasswordScreen extends StatefulWidget {
+class ResetPassword extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() {
-    return _ForgetPasswordScreenState();
-  }
+  _ResetPasswordState createState() => _ResetPasswordState();
 }
 
-class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
+class _ResetPasswordState extends State<ResetPassword> {
   final TextEditingController emailController = TextEditingController();
   var _key = GlobalKey<ScaffoldState>();
   double sizeBetween;
@@ -33,28 +29,9 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
     var width = MediaQuery.of(context).size.width;
     sizeBetween = height / 20;
     return Scaffold(
-      body: BlocConsumer<ForgetPasswordBloc, ForgetPasswordState>(
-        listener: (context, state) {
-          if (state is ForgetPasswordFinishedState) {
-            Navigator.of(context).pushNamedAndRemoveUntil(
-                SmartShipRoutes.verifyOTP, (Route<dynamic> route) => false,
-                arguments: OTPArguments(
-                    state.sendOTPModel.entity.userActivationId,
-                    emailController.text,
-                    true));
-          }
-          if (state is ForgetPasswordErrorState) {
-            AppConfig.showSnackBar(state.error ?? "",
-                context: context, key: widget.key);
-          }
-        },
+      body: BlocConsumer<ResetPasswordBloc, ResetPasswordState>(
+        listener: (context, state) {},
         builder: (context, state) {
-          if (state is ForgetPasswordProcessingState) {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-
           return SingleChildScrollView(
             child: Container(
               child: Stack(
@@ -128,7 +105,8 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                           height: 10,
                         ),
                         OpenFlutterButton(
-                            title: 'Send Code', onPressed: _validateAndSend),
+                            title: 'Reset Password',
+                            onPressed: _validateAndSend),
                         SizedBox(
                           height: 20,
                         ),
@@ -137,27 +115,12 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              "Don't have an account?  ",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.normal,
-                                  fontSize: 16,
-                                  fontFamily: "Lato"),
+                              'EN ',
+                              style: TextStyle(color: Colors.white),
                             ),
-                            InkWell(
-                              child: Text(
-                                'Register',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16,
-                                    fontFamily: "DIN"),
-                              ),
-                              onTap: () => {
-                                Navigator.of(context).pushReplacementNamed(
-                                    SmartShipRoutes.signin),
-                              },
+                            Icon(
+                              Icons.language,
+                              color: Colors.white,
                             ),
                           ],
                         ),
@@ -176,15 +139,5 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
     );
   }
 
-  void _showSignUpScreen() {
-    Navigator.of(context).pushNamed(SmartShipRoutes.signup);
-  }
-
-  void _validateAndSend() {
-    BlocProvider.of<ForgetPasswordBloc>(context).add(
-      ForgetPasswordPressed(
-        emailController.text,
-      ),
-    );
-  }
+  void _validateAndSend() {}
 }

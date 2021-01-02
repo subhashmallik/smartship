@@ -27,10 +27,10 @@ class OtpBloc extends Bloc<OtpEvent, OtpState> {
           OTPModel res = await userRepository.validateRegistrationOTP(
               userActivationId: event.activationId, opt: event.otp);
           print("validate otp res ---- ${res.toString()}");
-          if (res.errorDetails == null) {
+          if (res.entity) {
             yield OTPFinishedState();
           } else {
-            yield OTPErrorState(res.message);
+            yield OTPErrorState("Invalid OTP");
           }
         }
       } catch (error) {

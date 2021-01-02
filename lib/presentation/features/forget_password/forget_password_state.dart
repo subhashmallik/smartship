@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:smartshipapp/data/model/SendOTPModel.dart';
 
 abstract class ForgetPasswordState extends Equatable {
   @override
@@ -19,10 +20,10 @@ class ForgetPasswordErrorState extends ForgetPasswordState {
 }
 
 class ForgetPasswordFinishedState extends ForgetPasswordState {
-  final String email;
+  final SendOTPModel sendOTPModel;
 
-  ForgetPasswordFinishedState(this.email);
+  ForgetPasswordFinishedState(this.sendOTPModel);
 
   @override
-  List<Object> get props => [email];
+  List<Object> get props => [sendOTPModel];
 }

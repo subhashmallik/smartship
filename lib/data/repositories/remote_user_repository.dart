@@ -9,6 +9,7 @@ import 'package:smartshipapp/data/model/OTPModel.dart';
 import 'package:smartshipapp/data/model/SendOTPModel.dart';
 import 'package:smartshipapp/data/model/ValidateUser.dart';
 import 'package:smartshipapp/data/model/app_user.dart';
+import 'package:smartshipapp/data/model/registration/Registration.dart';
 
 import 'abstract/user_repository.dart';
 
@@ -131,7 +132,7 @@ class RemoteUserRepository extends UserRepository {
 
       if (response.statusCode != 200) {
         print("create user --- ${jsonResponse['message']}");
-        //throw jsonResponse['message'];
+        throw jsonResponse['message'];
       }
 
       return CreateUser.fromJson(jsonResponse);
@@ -218,6 +219,99 @@ class RemoteUserRepository extends UserRepository {
         throw jsonResponse['message'];
       }
       return OTPModel.fromJson(jsonResponse);
+    } catch (error) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<ValidateUser> resetPassword(
+      {String userActivationId, String password}) async {
+    var data = <String, String>{
+      'MerchantId': ServerAddresses.merchantId,
+      'UserActivationId': userActivationId,
+      'Password': password,
+    };
+    String body = json.encode(data);
+
+    var response = await http.post(
+        "${ServerAddresses.testServerAddress}/${ServerAddresses.resetPassword}",
+        headers: {"Content-Type": "application/json"},
+        body: body);
+    Map jsonResponse = json.decode(response.body);
+    if (response.statusCode != 200) {
+      throw jsonResponse['message'];
+    }
+    return ValidateUser.fromJson(jsonResponse);
+  }
+
+  @override
+  Future<Registration> getUserById({String userId}) async {
+    try {
+      var response = await http.get(
+          "${ServerAddresses.testServerAddress}/${ServerAddresses.userByUserId}/${ServerAddresses.merchantId}/$userId");
+      Map jsonResponse = json.decode(response.body);
+      if (response.statusCode != 200) {
+        throw jsonResponse['message'];
+      }
+      return Registration.fromJson(jsonResponse);
+    } catch (error) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<Registration> getUserByMobile({String mobile}) async {
+    try {
+      var response = await http.get(
+          "${ServerAddresses.testServerAddress}/${ServerAddresses.userByUserId}/${ServerAddresses.merchantId}/$mobile");
+      Map jsonResponse = json.decode(response.body);
+      if (response.statusCode != 200) {
+        throw jsonResponse['message'];
+      }
+      return Registration.fromJson(jsonResponse);
+    } catch (error) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<void> saveDocuments({JsonEncoder requestBody}) async {
+    try {
+      var response = await http.post(
+          "${ServerAddresses.testServerAddress}/${ServerAddresses.saveDocuments}",
+          headers: {"Content-Type": "application/json"},
+          body: requestBody);
+      print("create user --- ${response.body.toString()}");
+      Map jsonResponse = json.decode(response.body);
+
+      if (response.statusCode != 200) {
+        print("create user --- ${jsonResponse['message']}");
+        throw jsonResponse['message'];
+      }
+
+      return CreateUser.fromJson(jsonResponse);
+    } catch (error) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<void> userUpdate({JsonEncoder requestBody}) async {
+    try {
+      var response = await http.post(
+          "${ServerAddresses.testServerAddress}/${ServerAddresses.userUpdate}",
+          headers: {"Content-Type": "application/json"},
+          body: requestBody);
+      print("create user --- ${response.body.toString()}");
+      Map jsonResponse = json.decode(response.body);
+
+      if (response.statusCode != 200) {
+        print("create user --- ${jsonResponse['message']}");
+        throw jsonResponse['message'];
+      }
+
+      return CreateUser.fromJson(jsonResponse);
     } catch (error) {
       rethrow;
     }

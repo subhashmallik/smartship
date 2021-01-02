@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:smartshipapp/presentation/widgets/extensions/page_routes.dart';
 import 'package:smartshipapp/presentation/widgets/extensions/session.dart';
 
-
-
 class AppConfig {
   static Color kScaffoldColor = Color(0xff14245f);
   static Color kButtonColor = Color(0xfff83f06);
@@ -80,64 +78,23 @@ class AppConfig {
         HeroDialogRoute(builder: (_) => page),
       );
 
+  static Tween<BorderRadius> _kFrontHeadingBevelRadius = new BorderRadiusTween(
+    begin: const BorderRadius.only(
+      topRight: Radius.circular(20.0),
+    ),
+  );
   static void showSnackBar(String message,
       {BuildContext context,
       GlobalKey<ScaffoldState> key,
       Color color = Colors.pink,
       IconData icon}) {
     var snackBar = SnackBar(
-      behavior: SnackBarBehavior.fixed,
-      padding: EdgeInsets.symmetric(horizontal: 10),
-      elevation: 0,
-      content: ClipRRect(
-        borderRadius: BorderRadius.circular(AppConfig.kRadiusSmallest),
-        child: Container(
-          decoration: BoxDecoration(
-            border: Border(
-              left: BorderSide(
-                color: color ?? Colors.red[700],
-                width: 10,
-              ),
-            ),
-            color: kSwatch[900],
-          ),
-          child: Material(
-            color: Colors.transparent,
-            child: Row(
-              children: <Widget>[
-                SizedBox(width: 10),
-                Icon(
-                  icon ?? Icons.warning,
-                  color: Colors.white,
-                  size: 20,
-                ),
-                SizedBox(width: 10),
-                Expanded(
-                  child: Text(
-                    message ?? "n/a",
-                    maxLines: 3,
-                    style: Theme.of(context).textTheme.body1.copyWith(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
-                  ),
-                ),
-                IconButton(
-                    icon: Icon(Icons.close),
-                    color: Colors.white,
-                    onPressed: () {
-                      if (key == null) {
-                        Scaffold.of(context).hideCurrentSnackBar();
-                      } else {
-                        key.currentState.hideCurrentSnackBar();
-                      }
-                    })
-              ],
-            ),
-          ),
-        ),
+      shape: new BeveledRectangleBorder(
+        borderRadius: _kFrontHeadingBevelRadius.begin,
       ),
-      backgroundColor: Colors.transparent,
+      content: Text(message),
+      backgroundColor: Colors.red,
+      duration: Duration(seconds: 3),
     );
     if (key == null) {
       Scaffold.of(context).showSnackBar(snackBar);

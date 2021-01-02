@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:smartshipapp/data/model/CreateUser.dart';
 import 'package:smartshipapp/data/model/LoginModel.dart';
@@ -5,6 +7,7 @@ import 'package:smartshipapp/data/model/OTPModel.dart';
 import 'package:smartshipapp/data/model/SendOTPModel.dart';
 import 'package:smartshipapp/data/model/ValidateUser.dart';
 import 'package:smartshipapp/data/model/app_user.dart';
+import 'package:smartshipapp/data/model/registration/Registration.dart';
 import 'package:smartshipapp/data/repositories/remote_user_repository.dart';
 
 import 'abstract/user_repository.dart';
@@ -78,5 +81,23 @@ class UserRepositoryImpl extends UserRepository {
   @override
   Future<ValidateUser> userValidate({String phoneNumber}) async {
     return remoteUserRepository.userValidate(phoneNumber: phoneNumber);
+  }
+
+  @override
+  Future<ValidateUser> resetPassword(
+      {String userActivationId, String password}) async {
+    return remoteUserRepository.resetPassword(
+        userActivationId: userActivationId, password: password);
+  }
+
+  @override
+  Future<Registration> getUserById({String userId}) {
+    return remoteUserRepository.getUserById(userId: userId);
+  }
+
+  @override
+  Future<void> saveDocuments({JsonEncoder requestBody}) {
+    // TODO: implement saveDocuments
+    throw UnimplementedError();
   }
 }

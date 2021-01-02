@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:smartshipapp/config/config.dart';
 import 'package:smartshipapp/config/routes.dart';
 import 'package:smartshipapp/config/theme.dart';
 import 'package:smartshipapp/presentation/features/otp/otp_bloc.dart';
@@ -65,7 +66,6 @@ class _VerifyOTPState extends State<VerifyOTP> {
 
   @override
   Widget build(BuildContext context) {
-    //OTPArguments args = ModalRoute.of(context).settings.arguments;
     final OTPArguments args = ModalRoute.of(context).settings.arguments;
     userActivationId = args.userActivationId;
     //  print("number --- $args");
@@ -73,24 +73,17 @@ class _VerifyOTPState extends State<VerifyOTP> {
       body: BlocConsumer<OtpBloc, OtpState>(
         listener: (context, state) {
           if (state is OTPFinishedState) {
-            Navigator.of(context)
-                .pushReplacementNamed(SmartShipRoutes.termCondition);
-            // Navigator.of(context).pushNamedAndRemoveUntil(
-            //   SmartShipRoutes.verifyOTP,
-            //   (Route<dynamic> route) => false,
-            // );
+            if (args.forgotPassword) {
+              Navigator.of(context)
+                  .pushReplacementNamed(SmartShipRoutes.resetPassword);
+            } else {
+              Navigator.of(context)
+                  .pushReplacementNamed(SmartShipRoutes.termCondition);
+            }
           }
           if (state is OTPErrorState) {
-            Scaffold.of(context).showSnackBar(
-              SnackBar(
-                shape: new BeveledRectangleBorder(
-                  borderRadius: _kFrontHeadingBevelRadius.begin,
-                ),
-                content: Text('${state.error}'),
-                backgroundColor: Colors.red,
-                duration: Duration(seconds: 3),
-              ),
-            );
+            AppConfig.showSnackBar(state.error,
+                context: context, key: widget.key);
           }
         },
         builder: (context, state) {
@@ -161,7 +154,7 @@ class _VerifyOTPState extends State<VerifyOTP> {
                         OpenFlutterTextTile(
                           title: "OTP Verification",
                           subtitle:
-                              "One Time Password (OTP) has been sent to your mobile ${args.number}., please enter the same here for verification",
+                              "One Time Password (OTP) has been sent to your mobile ${args.number}. Please enter the same here for verification",
                         ),
                         SizedBox(
                           height: 10,

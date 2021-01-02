@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:smartshipapp/config/routes.dart';
 
 class Splash extends StatefulWidget {
   final String slug;
@@ -12,15 +11,8 @@ class Splash extends StatefulWidget {
 }
 
 class _SplashState extends State<Splash> {
-  _navigate() async {
-    Future.delayed(Duration(milliseconds: 1500), () {
-      Navigator.of(context).pushReplacementNamed(SmartShipRoutes.signin);
-    });
-  }
-
   @override
   void initState() {
-    _navigate();
     super.initState();
   }
 

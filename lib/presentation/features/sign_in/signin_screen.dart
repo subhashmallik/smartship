@@ -36,7 +36,6 @@ class _SignInScreenState extends State<SignInScreen> {
       topRight: Radius.circular(20.0),
     ),
   );
-
   Country _selected;
   @override
   Widget build(BuildContext context) {
@@ -200,6 +199,9 @@ class _SignInScreenState extends State<SignInScreen> {
                           suffixWidget: SvgPicture.asset(
                               "assets/icons/password_icon.svg"),
                         ),
+                        SizedBox(
+                          height: 5,
+                        ),
                         Padding(
                           padding: const EdgeInsets.only(right: 16),
                           child: Container(
@@ -295,7 +297,7 @@ class _SignInScreenState extends State<SignInScreen> {
     //   SmartShipRoutes.home,
     //   (Route<dynamic> route) => false,
     // );
-    //  print("contry ${_selected.dialingCode}");
+    print("contry $_selected");
     if (_selected != null) {
       BlocProvider.of<SignInBloc>(context).add(
         SignInPressed(

@@ -23,7 +23,7 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
   ) async* {
     // normal sign up
     if (event is SignUpPressed) {
-      // yield SignUpProcessingState();
+      yield SignUpProcessingState();
       try {
         final CreateUser res = await userRepository.signUp(
             firstName: event.firstName,
