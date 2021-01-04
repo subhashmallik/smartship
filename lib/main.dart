@@ -10,7 +10,6 @@ import 'package:smartshipapp/authentication/authentication_state.dart';
 import 'package:smartshipapp/presentation/features/account/account_screen.dart';
 import 'package:smartshipapp/presentation/features/forget_password/forget_password_bloc.dart';
 import 'package:smartshipapp/presentation/features/forget_password/forget_password_screen.dart';
-import 'package:smartshipapp/presentation/features/home/landing.dart';
 import 'package:smartshipapp/presentation/features/otp/otp_bloc.dart';
 import 'package:smartshipapp/presentation/features/otp/terms_conditions.dart';
 import 'package:smartshipapp/presentation/features/otp/verify_otp_screen.dart';
@@ -31,6 +30,7 @@ import 'config/theme.dart';
 import 'data/repositories/abstract/user_repository.dart';
 import 'locator.dart' as service_locator;
 import 'locator.dart';
+import 'presentation/features/wallet/wallet_screen.dart';
 
 class SimpleBlocDelegate extends BlocObserver {
   @override
@@ -120,17 +120,17 @@ class SmartShipApp extends StatelessWidget {
               builder: (context, state) {
             if (state is Authenticated) {
               print("AuthenticationState ----- ");
-              return Landing();
+              return WalletScreen();
             } else {
-              return Landing(); //_buildSignInBloc();
+              return WalletScreen(); //_buildSignInBloc();
             }
           }),
       //SmartShipRoutes.splash: (context) => Splash(),
       SmartShipRoutes.validateUser: (context) => _buildUserValidateBloc(),
       SmartShipRoutes.termCondition: (context) => TermCondition(),
       SmartShipRoutes.verifyOTP: (context) => _otpBloc(),
-      SmartShipRoutes.home: (context) => Landing(),
-      SmartShipRoutes.landing: (context) => Landing(),
+      SmartShipRoutes.home: (context) => WalletScreen(),
+      SmartShipRoutes.wallet: (context) => WalletScreen(),
       SmartShipRoutes.account: (context) => AccountScreen(),
       SmartShipRoutes.signin: (context) => _buildSignInBloc(),
       SmartShipRoutes.signup: (context) => _buildSignUpBloc(),
