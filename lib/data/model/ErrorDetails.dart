@@ -8,7 +8,7 @@ class ErrorDetails {
       {this.additionalProp1,
       this.additionalProp2,
       this.additionalProp3,
-      message});
+      this.message});
 
   factory ErrorDetails.fromJson(Map<String, dynamic> json) {
     return ErrorDetails(
@@ -24,7 +24,7 @@ class ErrorDetails {
     data['additionalProp1'] = this.additionalProp1;
     data['additionalProp2'] = this.additionalProp2;
     data['additionalProp3'] = this.additionalProp3;
-    data['message'] = this.message;
+    data['Message'] = this.message;
     return data;
   }
 

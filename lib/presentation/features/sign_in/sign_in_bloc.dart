@@ -35,17 +35,17 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
             phoneNumber: "${event.countryCode}${event.phoneNumber}",
             password: event.password,
           );
-          print("login resp ==== ${res.toString()}");
+          //  print("login resp ==== ${res.toString()}");
           if (res.entity != null) {
             authenticationBloc
                 .add(LoggedIn(res.entity.token, res.entity.userID));
             yield SignInFinishedState();
           } else {
+            //   print("error ==== ${res.errorDetails}");
             yield SignInErrorState(res.errorDetails.message);
           }
         }
       } catch (error) {
-        print("error ==== ${error.toString()}");
         yield SignInErrorState(error.toString());
       }
     }

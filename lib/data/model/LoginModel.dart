@@ -16,14 +16,14 @@ class LoginModel {
       errorDetails: json['errorDetails'] != null
           ? ErrorDetails.fromJson(json['errorDetails'])
           : null,
-      message: json['message'],
+      message: json['Message'],
     );
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['code'] = this.code;
-    data['message'] = this.message;
+    data['Message'] = this.message;
     if (this.entity != null) {
       data['entity'] = this.entity.toJson();
     }
