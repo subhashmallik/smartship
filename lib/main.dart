@@ -10,6 +10,7 @@ import 'package:smartshipapp/authentication/authentication_state.dart';
 import 'package:smartshipapp/presentation/features/account/account_screen.dart';
 import 'package:smartshipapp/presentation/features/forget_password/forget_password_bloc.dart';
 import 'package:smartshipapp/presentation/features/forget_password/forget_password_screen.dart';
+import 'package:smartshipapp/presentation/features/home/landing.dart';
 import 'package:smartshipapp/presentation/features/otp/otp_bloc.dart';
 import 'package:smartshipapp/presentation/features/otp/terms_conditions.dart';
 import 'package:smartshipapp/presentation/features/otp/verify_otp_screen.dart';
@@ -120,9 +121,9 @@ class SmartShipApp extends StatelessWidget {
               builder: (context, state) {
             if (state is Authenticated) {
               print("AuthenticationState ----- ");
-              return WalletScreen();
+              return Landing();
             } else {
-              return WalletScreen(); //_buildSignInBloc();
+              return Landing(); //_buildSignInBloc();
             }
           }),
       //SmartShipRoutes.splash: (context) => Splash(),

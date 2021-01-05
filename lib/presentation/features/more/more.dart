@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:smartshipapp/config/theme.dart';
 import 'package:smartshipapp/presentation/features/account/account_screen.dart';
 import 'package:smartshipapp/presentation/features/address/address.dart';
+import 'package:smartshipapp/presentation/features/wallet/wallet_screen.dart';
 
 class More extends StatelessWidget {
   var _items = [
@@ -78,8 +79,11 @@ class More extends StatelessWidget {
       case 3:
         redirectView(cxt, AccountScreen());
         break;
+      case 0:
+        redirectView(cxt, WalletScreen());
+        break;
       default:
-        ;
+        break;
     }
   }
 
