@@ -26,7 +26,7 @@ class AddShipment extends StatelessWidget {
                 elevation: 0,
                 bottom: PreferredSize(
                   child: Material(
-                    color: Theme.of(context).scaffoldBackgroundColor,
+                    color: AppColors.appBlueDark,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -103,7 +103,7 @@ class AddShipment extends StatelessWidget {
                       Expanded(
                         child: Text(
                           "New Shipment",
-                          style: Theme.of(context).textTheme.headline6,
+                          style: Theme.of(context).textTheme.caption,
                         ),
                       ),
                     ],

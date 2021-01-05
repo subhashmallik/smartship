@@ -3,6 +3,7 @@
 // Date: 2020-02-06
 
 import 'package:flutter/material.dart';
+import 'package:smartshipapp/config/config.dart';
 
 class AppSizes {
   static const int splashScreenTitleFontSize = 48;
@@ -15,7 +16,7 @@ class AppSizes {
   static const double widgetBorderRadius = 34;
   static const double textFieldRadius = 4.0;
   static const EdgeInsets bottomSheetPadding =
-      EdgeInsets.symmetric(horizontal: 16, vertical: 10);
+  EdgeInsets.symmetric(horizontal: 16, vertical: 10);
   static const app_bar_size = 56.0;
   static const app_bar_expanded_size = 180.0;
   static const tile_width = 148.0;
@@ -36,6 +37,7 @@ class AppColors {
   static const transparent = Color(0x00000000);
   static const success = Color(0xFF2AA952);
   static const green = Color(0xFF2AA952);
+  static const headerIconBg=Color(0xFF1B3458);
   static const Color appBlue = Color(0xFF1B365D);
   static const Color appBlueLight = Color(0xFF3C5A88);
   static const Color appBundleAddCart = Color(0xFF26487B);
@@ -72,6 +74,7 @@ class AppColors {
   static const Color couponHint = Color(0xFF5F8CC9);
   static const Color appAddressSelectColor = Color(0xFF007884);
   static const Color appEditColor = Color(0xFF1F406F);
+  static const Color appCommodityColor = Color(0xFF68D1DB);
 }
 
 class AppConsts {
@@ -86,12 +89,22 @@ class AppTheme {
     return theme.copyWith(
       primaryColor: AppColors.black,
       primaryColorLight: AppColors.lightGray,
-      accentColor: AppColors.red,
       bottomAppBarColor: AppColors.lightGray,
-      backgroundColor: AppColors.background,
       dialogBackgroundColor: AppColors.backgroundLight,
       errorColor: AppColors.red,
-      dividerColor: Colors.transparent,
+      canvasColor: AppConfig.kSwatch,
+      accentColor: AppConfig.kAccentColor,
+      buttonColor: AppConfig.kButtonColor,
+      cardColor: AppConfig.kSwatch,
+      hintColor: AppConfig.kHintColor,
+      disabledColor: AppConfig.kSwatch[200],
+      backgroundColor: AppConfig.kSwatch[900],
+      brightness: Brightness.dark,
+      accentColorBrightness: Brightness.dark,
+      primaryColorBrightness: Brightness.dark,
+      scaffoldBackgroundColor: AppConfig.kScaffoldColor,
+      dividerColor: AppConfig.kDividerColor,
+      iconTheme: IconThemeData(color: Colors.white),
       appBarTheme: theme.appBarTheme.copyWith(
           color: AppColors.white,
           iconTheme: IconThemeData(color: AppColors.black),
@@ -103,71 +116,72 @@ class AppTheme {
                   fontWeight: FontWeight.w400))),
       textTheme: theme.textTheme
           .copyWith(
-            //over image white text
-            headline: theme.textTheme.headline.copyWith(
-                fontSize: 48,
-                color: AppColors.white,
-                fontFamily: 'Metropolis',
-                fontWeight: FontWeight.w900),
-            title: theme.textTheme.title.copyWith(
-                fontSize: 24,
-                color: AppColors.black,
-                fontWeight: FontWeight.w900,
-                fontFamily: 'Metropolis'), //
+        //over image white text
+        headline: theme.textTheme.headline.copyWith(
+            fontSize: 48,
+            color: AppColors.white,
+            fontFamily: 'Metropolis',
+            fontWeight: FontWeight.w900),
+        title: theme.textTheme.title.copyWith(
+            fontSize: 24,
+            color: AppColors.black,
+            fontWeight: FontWeight.w900,
+            fontFamily: 'Metropolis'),
+        //
 
-            //product title
-            display1: theme.textTheme.display1.copyWith(
-                color: AppColors.black,
-                fontSize: 16,
-                fontWeight: FontWeight.w400,
-                fontFamily: 'Metropolis'),
+        //product title
+        display1: theme.textTheme.display1.copyWith(
+            color: AppColors.black,
+            fontSize: 16,
+            fontWeight: FontWeight.w400,
+            fontFamily: 'Metropolis'),
 
-            display2: theme.textTheme.display2.copyWith(
-                fontFamily: 'Metropolis', fontWeight: FontWeight.w400),
-            //product price
-            display3: theme.textTheme.display3.copyWith(
-                color: AppColors.lightGray,
-                fontSize: 14,
-                fontFamily: 'Metropolis',
-                fontWeight: FontWeight.w400),
-            display4: theme.textTheme.display4.copyWith(
-                fontFamily: 'Metropolis', fontWeight: FontWeight.w500),
+        display2: theme.textTheme.display2.copyWith(
+            fontFamily: 'Metropolis', fontWeight: FontWeight.w400),
+        //product price
+        display3: theme.textTheme.display3.copyWith(
+            color: AppColors.lightGray,
+            fontSize: 14,
+            fontFamily: 'Metropolis',
+            fontWeight: FontWeight.w400),
+        display4: theme.textTheme.display4.copyWith(
+            fontFamily: 'Metropolis', fontWeight: FontWeight.w500),
 
-            subtitle: theme.textTheme.headline.copyWith(
-                fontSize: 18,
-                color: AppColors.black,
-                fontFamily: 'Metropolis',
-                fontWeight: FontWeight.w400),
-            subhead: theme.textTheme.headline.copyWith(
-                fontSize: 24,
-                color: AppColors.darkGray,
-                fontFamily: 'Metropolis',
-                fontWeight: FontWeight.w500),
-            //red button with white text
-            button: theme.textTheme.button.copyWith(
-                fontSize: 14,
-                color: AppColors.white,
-                fontFamily: 'Metropolis',
-                fontWeight: FontWeight.w500),
-            //black caption title
-            caption: theme.textTheme.caption.copyWith(
-                fontSize: 34,
-                color: AppColors.black,
-                fontFamily: 'Metropolis',
-                fontWeight: FontWeight.w700),
-            //light gray small text
-            body1: theme.textTheme.body1.copyWith(
-                color: AppColors.lightGray,
-                fontSize: 11,
-                fontFamily: 'Metropolis',
-                fontWeight: FontWeight.w400),
-            //view all link
-            body2: theme.textTheme.body2.copyWith(
-                color: AppColors.black,
-                fontSize: 11,
-                fontFamily: 'Metropolis',
-                fontWeight: FontWeight.w400),
-          )
+        subtitle: theme.textTheme.headline.copyWith(
+            fontSize: 18,
+            color: AppColors.black,
+            fontFamily: 'Metropolis',
+            fontWeight: FontWeight.w400),
+        subhead: theme.textTheme.headline.copyWith(
+            fontSize: 24,
+            color: AppColors.darkGray,
+            fontFamily: 'Metropolis',
+            fontWeight: FontWeight.w500),
+        //red button with white text
+        button: theme.textTheme.button.copyWith(
+            fontSize: 14,
+            color: AppColors.white,
+            fontFamily: 'Metropolis',
+            fontWeight: FontWeight.w500),
+        caption: TextStyle(
+            color: AppColors.appOrangeLight,
+            fontSize: 26,
+            height: AppConfig.kLineHeight,
+            fontFamily: 'Metropolis',
+            fontWeight: FontWeight.w700),
+        //light gray small text
+        body1: theme.textTheme.body1.copyWith(
+            color: AppColors.lightGray,
+            fontSize: 11,
+            fontFamily: 'Metropolis',
+            fontWeight: FontWeight.w400),
+        //view all link
+        body2: theme.textTheme.body2.copyWith(
+            color: AppColors.black,
+            fontSize: 11,
+            fontFamily: 'Metropolis',
+            fontWeight: FontWeight.w400),
+      )
           .apply(fontFamily: 'Metropolis'),
       buttonTheme: theme.buttonTheme.copyWith(
         minWidth: 50,

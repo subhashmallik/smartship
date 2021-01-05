@@ -41,19 +41,19 @@ class _SliverHeaderBarState extends State<SliverHeaderBar> {
             Expanded(
               child: Text(
                 widget.title,
-                style: Theme.of(context).textTheme.headline5,
+                style: Theme.of(context).textTheme.caption,
               ),
             ),
           ],
         ),
         background: Align(
-          alignment: Alignment(1.08, 0.77),
+          alignment: Alignment(1.3, 0.52),
           child: Container(
             child: SvgPicture.asset(
               "assets/images/head_icon_load.svg",
-              color: AppColors.appGreyLight,
-              width: 80,
-              height: 100,
+              color: AppColors.appBlueLight,
+              width: 120,
+              height: 120,
             ),
           ),
         ),
